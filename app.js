@@ -1,8 +1,13 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
 
+const app = express();
 const noteRoute = require('./routes/NoteRoutes.js');
 
+app.use(bodyParser.urlencoded({
+    extended: false,
+    parameterLimit: 3
+}));
 app.use("/notes", noteRoute);
 app.use(express.static("./public/css"));
 app.use(express.static("./public/images"));

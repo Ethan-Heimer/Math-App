@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <link rel="stylesheet" href="/style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@600&display=swap" rel="stylesheet">
-</head>
+<%-include("partials/header.ejs")%>
 <body>
+    <div class="center">
+        <button class="primary-color font-x-large hover-scale" id="add-button">
+            <a href="/notes/create">Add Fact!</a>
+        </button>
+    </div>
+
+
     <div class="flex">
 
         <% notes.forEach(x => { %>
-            <div class="card">
-                <h1 class="header"><%=x.note_title%></h1>    
-    
-                <div class = "content center">
-                    <p><%=x.note_content%>!</p>
-                </div>
-                
-            </div>
+            <%- include('partials/noteCard.ejs', {note: x}); %>
         <%})%>
 
     </div>
+
+    <script src="/test.js"></script>
 </body>
 </html>

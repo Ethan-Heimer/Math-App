@@ -1,0 +1,30 @@
+<%-include("partials/header.ejs")%>
+
+<body>
+    <div class="center s-100">
+        <form class="s-75 primary-color" action="/notes/add" enctype="multipart/form-data" method="POST">
+            <legend class="center-flex p-100">
+                <h1 class="font-x-large">Add a new Note!</h1>
+
+                <div class="m-1 center">
+                    <label for="title">Fact Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter a Title!">
+                </div>
+
+                <div class="m-1 center">
+                    <label for="Content">Fact Content</label>
+                    <textarea id="content" name="content" placeholder="Fact Content!" rows="8" cols="80"></textarea>
+                </div>
+
+                <div class="m-1 center">
+                    <label for="tags">Fact Tags</label>
+                    <p class="font-medium">(Seperate tags with a ,)</p>
+                    <input type="text" id="tags" name="tags" placeholder="Enter Fact Tags">
+                </div>
+
+                <button type="submit" class="hover-scale font-large secondary-color flex-end" id="add-button">Add Fact!</button>
+            </legend>
+        </form>
+    </div>    
+</body>
+</html>

@@ -1,5 +1,6 @@
 const {Client} = require("pg");
 require('dotenv').config();
+const stringBuilder = require("../stringBuilder.js");
 
 const client = new Client({
     host: process.env.DATABASE_HOST,
@@ -22,6 +23,23 @@ const GetAllNotes = async (callback) => {
     });
 }
 
+const AddNewNote = (title, content, tags, callback) => {
+    let formattedTags = stringBuilder.formatToSQLArray(tags);
+   
+    try{
+        client.query(`
+        insert into notes (user_id, note_title, note_content, note_tags)
+        values (1, '${title}', '${content}', '${formattedTags}')
+        `);
+    }
+    catch{
+        callback(error)
+    }
+
+    
+}
+
 module.exports = {
     GetAllNotes: GetAllNotes,
+    AddNewNote: AddNewNote,
 }
