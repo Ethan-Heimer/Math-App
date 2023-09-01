@@ -1,0 +1,184 @@
+:root{
+    --background-color: #1E1E24;
+
+    --primary-background-color: #131316;
+
+    --card-header-color: #8EE3EF;
+
+    --font-x-large: 2.5vmax;
+    --font-large: 1.5vmax;
+    --font-medium: 1vmax;
+
+    --rounded: 1vmax;
+}
+
+*{
+    color: white;
+    font-family: 'Dosis', sans-serif;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body{
+    background-color: var(--background-color);
+
+    min-width: 100vw;
+    min-height: 100vh;
+
+    overflow-x: hidden;
+}
+
+textarea{
+    resize: none;
+
+    font-size: var(--font-large);
+
+    max-width: 75%;
+}
+
+input, textarea{
+    font-size: var(--font-medium);
+    padding: 1vmin;
+    text-align: center;
+    background-color: var(--background-color);
+    border: none;
+
+    border-radius: 1vmax;
+}
+
+label{
+    font-size: var(--font-large);
+}
+
+button{
+    border-radius: 1000px;
+
+    padding-block: 1vmin;
+    padding-inline: 4vmin;
+
+    margin: 1vmax;
+}
+
+form{
+    border-radius: var(--rounded);
+}
+
+.lock{
+    overflow-y: hidden;
+}
+
+.primary-color{
+    background-color:  var(--primary-background-color);
+}
+
+.secondary-color{
+    background-color: var(--background-color);
+}
+
+.font-x-large{
+    font-size: var(--font-x-large);
+}
+
+.font-large{
+    font-size: var(--font-large);
+}
+
+.font-medium{
+    font-size: var(--font-medium);
+}
+
+.flex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 30px;
+}
+
+.center{
+    display: grid;
+    place-items: center;
+}
+
+.center-flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-end{
+    justify-self: end;
+}
+
+.s-75{
+    width: 75vw;
+    height: 75vh;
+}
+
+.s-100{
+    width: 100vw;
+    height: 100vh;
+}
+
+.m-1{
+    margin: 1vmax;
+}
+
+.p-100{
+    width: 100%;
+    height: 100%;
+}
+
+.card{
+    background-color: var(--primary-background-color);
+
+    width: 25vw;
+    height: 20vw;
+
+    min-width: 400px;
+    min-height: 250px;
+}
+
+.card > .header{
+    width: 100%;
+    height: 10%;
+
+    background-color: var(--card-header-color);
+    font-size: var(--font-large);
+
+    text-align: center;
+}
+
+.card > .content{
+    font-size: var(--font-medium);
+
+    text-align: center;
+
+    height: 90%;
+    width: 100%;
+}
+
+.hover-scale{
+    border: none;
+    text-align: center;
+
+    transition: .1s;
+}
+
+.hover-scale:hover{
+    scale: 1.1;
+}
+
+@media screen and (max-width: 600px){
+    :root{
+        --font-x-large: 4vmax;
+        --font-large: 3vmax;
+        --font-medium: 2vmax;
+    }
+}
+
+

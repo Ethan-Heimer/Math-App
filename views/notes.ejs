@@ -1,0 +1,20 @@
+<%-include("partials/header.ejs")%>
+<body>
+    <div class="center">
+        <button class="primary-color font-x-large hover-scale" id="add-button">
+            <a href="/notes/create">Add Fact!</a>
+        </button>
+    </div>
+
+
+    <div class="flex">
+
+        <% notes.forEach(x => { %>
+            <%- include('partials/noteCard.ejs', {note: x}); %>
+        <%})%>
+
+    </div>
+
+    <script src="/test.js"></script>
+</body>
+</html>
