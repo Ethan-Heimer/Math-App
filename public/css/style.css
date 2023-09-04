@@ -55,6 +55,7 @@ input, textarea{
     border: none;
 
     border-radius: 1vmax;
+    box-shadow: var(--shadow) 10px 10px 20px;
 }
 
 label{

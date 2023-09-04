@@ -4,17 +4,20 @@
         <button class="primary-color font-large m-1">
             <a href="/notes/create-1">Add Fact!</a>
         </button>
+
+        <form class="m-1" action="/notes/filter" method="POST">
+            <input class="primary-color" type="text" name="filters" placeholder="Filter" <%if(filters != null){%>
+                                                                                            value='<%=filters%>'
+                                                                                         <%}%>>
+            <button class="primary-color" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
     </div>
 
-
-    <div class="flex">
-
+    <div class="flex m-1">
         <% notes.forEach(x => { %>
             <%- include('partials/noteCard.ejs', {note: x}); %>
         <%})%>
-
     </div>
 
-    <script src="/test.js"></script>
 </body>
 </html>
