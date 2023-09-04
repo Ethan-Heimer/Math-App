@@ -10,7 +10,7 @@ function GetStringArrayFromString(string, splitChar){
 
 function GetIntArrayFromString(string, splitChar){
     array = GetStringArrayFromString(string, splitChar);
-    array.map(x => parseInt(x));
+    array = array.map(x => parseInt(x));
 
     return array.filter(x => x != NaN);
 }

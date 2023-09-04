@@ -36,7 +36,10 @@ const GetNoteById = (id, callback) => {
 }
 
 const GetNotesByIds = (ids, callback) => {
+    if(ids.length == 0) callback([], "no ids input");
+    
     let orCondition = stringBuilder.constructSQLIntOrQueryFromArray(ids, "id =")
+    console.log(ids, orCondition);
 
     client.query(`select * from notes where ${orCondition}`, (err, res) => {
         if(!err){
@@ -50,7 +53,7 @@ const GetNotesByIds = (ids, callback) => {
 
 const GetAllNoteIds = (callback) => {
     GetAllNotes((notes, err) => {
-        const ids = notes.map(x => x.id);
+        const ids = GetNoteIds(notes);
 
         callback(ids, err);
     })
@@ -92,7 +95,7 @@ const GetNotesByTag = async (tags, callback) => {
     });
 }
 
-const GetNoteId = (note) => note.id;
+const GetNoteId = (note) => parseInt(note.id);
 const GetNoteIds = (notes) => {
     return notes.map(x => GetNoteId(x));
 }
