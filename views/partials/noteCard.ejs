@@ -1,8 +1,21 @@
 <div class="card">
     <h1 class="header"><%=note.note_title%></h1>    
 
-    <div class = "content center">
-        <p><%=note.note_content%>!</p>
+    <div class="content center">
+        <p><%=note.note_content%></p>
     </div>
     
+    <div class="footer">
+        <%=note.note_tags%>#<%=note.id%>
+
+        <div>
+           <button id="edit">
+                <a href="notes/create<%=note.id%>"><i class="fa-solid fa-pencil"></i></a>
+           </button>
+
+           <button id="delete">
+                <a href="notes/delete<%=note.id%>"><i class="fa-solid fa-trash"></i></a>
+           </button>
+        </div>
+    </div>
 </div>

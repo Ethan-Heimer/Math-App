@@ -4,14 +4,14 @@ function formatToSQLArray(string){
     let elements = string.split(",");
     elements = elements.map(x => x.trim());
 
-    let resault = "{";
+    let resault = `{`;
     for(let i = 0; i < elements.length; i++){
         resault += `"${elements[i]}"`;
 
         if(i != elements.length-1)
-            resault += ", ";
+            resault += ', ';
     }
-    resault += "}"
+    resault += '}'
 
     return resault;
 }
