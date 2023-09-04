@@ -5,11 +5,19 @@
 
     --card-header-color: #8EE3EF;
 
+    --font-dull: gray;
+
     --font-x-large: 2.5vmax;
     --font-large: 1.5vmax;
     --font-medium: 1vmax;
+    --font-small: .5vmax;
 
     --rounded: 1vmax;
+
+    --shadow: #000000;
+
+    --grabage-highlight: #E56B6F;
+    --edit-highlight: #FFBA49;
 }
 
 *{
@@ -54,12 +62,16 @@ label{
 }
 
 button{
-    border-radius: 1000px;
+    border-radius: var(--rounded);
+    padding: .75vmax;
+    border: none;
 
-    padding-block: 1vmin;
-    padding-inline: 4vmin;
+    transition: .1s;
+    box-shadow: var(--shadow) 10px 10px 15px;
+}
 
-    margin: 1vmax;
+button:hover{
+    scale: 1.1;
 }
 
 form{
@@ -90,12 +102,16 @@ form{
     font-size: var(--font-medium);
 }
 
+.dull{
+    color: var(--font-dull);
+}
+
 .flex{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 30px;
+    justify-content: center;
+    gap: 5vmax;
 }
 
 .center{
@@ -141,36 +157,63 @@ form{
 
     min-width: 400px;
     min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: var(--rounded);
+
+    box-shadow: var(--shadow) 10px 10px 20px;
+
+    transition: .1s;
+}
+
+.card:hover{
+    scale: 1.05;
 }
 
 .card > .header{
-    width: 100%;
-    height: 10%;
+    padding: 1vmax;
+    min-height: fit-content;
 
     background-color: var(--card-header-color);
     font-size: var(--font-large);
 
     text-align: center;
+
+   border-radius: var(--rounded);
+   scale: 1.02;
+
+   box-shadow: var(--shadow) 10px 10px 20px;
 }
 
 .card > .content{
     font-size: var(--font-medium);
-
     text-align: center;
-
-    height: 90%;
-    width: 100%;
+    flex-grow: 1;
 }
 
-.hover-scale{
-    border: none;
-    text-align: center;
+.card > .footer{
+    font-size: var(--font-small);
+    padding: .5vmax;
+    color: var(--font-dull);
 
-    transition: .1s;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
 }
 
-.hover-scale:hover{
-    scale: 1.1;
+.card > .footer button{
+    background-color: var(--background-color);
+    padding-inline: .5vmax;
+    padding-block: .25vmax;
+}
+
+.card > .footer #delete:hover{
+    background-color: var(--grabage-highlight);
+}
+.card > .footer #edit:hover{
+    background-color: var(--edit-highlight);
 }
 
 @media screen and (max-width: 600px){
@@ -178,6 +221,7 @@ form{
         --font-x-large: 4vmax;
         --font-large: 3vmax;
         --font-medium: 2vmax;
+        --fonr-small: 1vmax;
     }
 }
 

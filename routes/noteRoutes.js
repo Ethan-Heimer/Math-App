@@ -8,8 +8,12 @@ const noteControlls = require("../controllers/noteController.js");
 
 router.get('/', noteControlls.GetAllNotes);
 
-router.get("/create", noteControlls.DisplayNoteCreater)
+router.get("/create:id", noteControlls.DisplayNoteCreater)
 
 router.post("/add", upload.none(), noteControlls.AddNote);
+
+router.post("/edit:id", upload.none(), noteControlls.EditNote)
+
+router.get('/delete:id', noteControlls.DeleteNote);
 
 module.exports = router;

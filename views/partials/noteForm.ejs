@@ -1,0 +1,39 @@
+<form class="s-75 primary-color" <%if(fact != null){%>
+                                    action="/notes/edit<%=fact.id%>"
+                                 <%}else{%>
+                                    action="/notes/add"
+                                 <%}%> enctype="multipart/form-data" method="POST">
+    <legend class="center-flex p-100">
+        <h1 class="font-x-large"><%if(fact != null){%>
+                                        Edit  
+                                 <%}else{%> 
+                                        Add
+                                 <%}%> a Fact!</h1>
+
+        <div class="m-1 center">
+            <label for="title">Fact Title</label>
+            <input type="text" id="title" name="title" placeholder="Enter a Title!" <% if(fact != null){ %> 
+                                                                                        value="<%=fact.note_title%>"
+                                                                                    <%}%>>
+        </div>
+
+        <div class="m-1 center">
+            <label for="Content">Fact Content</label>
+            <textarea id="content" name="content" placeholder="Fact Content!" rows="8" cols="80"> <% if(fact != null){ %><%=fact.note_content%><%}%></textarea>
+        </div>
+
+        <div class="m-1 center">
+            <label for="tags">Fact Tags</label>
+            <p class="font-medium dull">(Seperate tags with a ,)</p>
+            <input type="text" id="tags" name="tags" placeholder="Enter Fact Tags" <% if(fact != null){ %>
+                                                                                        value="<%=fact.note_tags.join(", ")%>"
+                                                                                   <%}%>>
+        </div>
+
+        <button type="submit" class="hover-scale font-large secondary-color flex-end" id="add-button"><%if(fact != null){%>
+                                                                                                        Edit  
+                                                                                                      <%}else{%> 
+                                                                                                        Add
+                                                                                                      <%}%> Fact!</button>
+    </legend>
+</form>
