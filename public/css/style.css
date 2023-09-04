@@ -150,6 +150,10 @@ form{
     height: 100%;
 }
 
+.pad-1{
+    padding: 1vmax;
+}
+
 .card{
     background-color: var(--primary-background-color);
 
