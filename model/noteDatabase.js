@@ -1,105 +1,48 @@
-const {Client} = require("pg");
 require('dotenv').config();
-const stringBuilder = require("../utils/stringBuilder.js");
-const noteController = require("../controllers/noteController.js");
 
-const client = new Client({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    port: process.env.DATABASE_PORT,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME
-});
-
-client.connect();
-
-const GetAllNotes = (callback) => {
-    client.query("select * from notes", (err, res) => {
-        if(!err){
-           callback(res.rows.sort((a, b) => a.id-b.id), null)
-        }
-        else{
-            console.log(err, "Get All Notes");
-        }
-    });
+const tableData = {
+    name: process.env.NOTE_TABLE_NAME,
+    userId: process.env.NOTE_TABLE_USER_ID,
+    noteTitle: process.env.NOTE_TABLE_NOTE_TITLE,
+    noteContent: process.env.NOTE_TABLE_NOTE_CONTENT,
+    noteTags: process.env.NOTE_TABLE_NOTE_TAGS
 }
 
-const GetNoteById = (id, callback) => {
-    client.query(`select * from notes where id = ${id}`, (err, res) => {
-        if(!err){
-            callback(res.rows[0], null)
-        }
-        else{
-             console.log(err, " Get One Note by Id");
-        }
-    })
+const SQLHandler = require("../utils/sqlHandler.js");
+const SQL = new SQLHandler(tableData);
+
+const GetNoteById = async(id) => {
+    return await SQL.GetElementById(id);
 }
 
-const GetNotesByIds = (ids, callback) => {
-    if(ids.length == 0) callback([], "no ids input");
-    
-    let orCondition = stringBuilder.constructSQLIntOrQueryFromArray(ids, "id =")
-    console.log(ids, orCondition);
-
-    client.query(`select * from notes where ${orCondition}`, (err, res) => {
-        if(!err){
-            callback(res.rows, null);
-        }
-        else{
-             console.log(err, " Get Notes By Ids");
-        }
-    })
+const GetNotesByIds = async (ids) => {
+    return await SQL.GetElementsFromIds(ids);
 }
 
-const GetAllNoteIds = (callback) => {
-    GetAllNotes((notes, err) => {
-        const ids = GetNoteIds(notes);
-
-        callback(ids, err);
-    })
+const GetNotesByTag= async (tags) => {
+    return await SQL.GetElementsByArrayAttribute("noteTags", tags);
 }
 
-const AddNewNote = (title, content, tags, callback) => {
-    let formattedTags = stringBuilder.formatToSQLArray(tags);
-
-    client.query(`
-    insert into notes (user_id, note_title, note_content, note_tags)
-    values (1, '${title}', '${content}', '${formattedTags}')
-    `);
+const GetAllNotes = async () => {
+    return await SQL.GetAllElements();
 }
 
-const EditNote = (id, title, content, tags) => {
-    let formattedTags = stringBuilder.formatToSQLArray(tags);
-    
-    client.query(`update notes 
-                set note_title = '${title}', 
-                    note_content = '${content}',
-                    note_tags = '${formattedTags}'
-                where id = ${id};`);
+const GetAllNoteIds = async () => {
+    const notes = await SQL.GetAllElements();
+    return await SQL.GetElementsIds(notes);
 }
 
-const DeleteNote = (id) => {
-    client.query(`delete from notes where id = ${id}`);
+const DeleteNote = async (id) => {
+   await SQL.DeleteElement(id);
 }
 
-const GetNotesByTag = async (tags, callback) => {
-    let q = stringBuilder.constructSQLArrayComparison(tags, "any (note_tags)");
-
-    client.query(`select * from notes where ${q};`, (err, res) => {
-        if(!err){
-            callback(res.rows.sort((a, b) => a.id-b.id), null)
-         }
-         else{
-             console.log(err, "Get Notes By Tag");
-         }
-    });
+const AddNewNote = async (title, content, tags) => {
+    await SQL.AddElement([title, content, tags]);
 }
 
-const GetNoteId = (note) => parseInt(note.id);
-const GetNoteIds = (notes) => {
-    return notes.map(x => GetNoteId(x));
+const EditNote = async (id, title, content, tags) => {
+    await SQL.UpdateElement(id, [1, title, content, tags]);
 }
-
 
 module.exports = {
     GetAllNotes,
@@ -110,6 +53,4 @@ module.exports = {
     GetNotesByTag,
     GetNotesByIds,
     GetAllNoteIds,
-    GetNoteId,
-    GetNoteIds,
 }
