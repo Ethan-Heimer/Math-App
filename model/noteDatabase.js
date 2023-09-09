@@ -7,7 +7,8 @@ const tableData = {
     userId: process.env.NOTE_TABLE_USER_ID,
     noteTitle: process.env.NOTE_TABLE_NOTE_TITLE,
     noteContent: process.env.NOTE_TABLE_NOTE_CONTENT,
-    noteTags: process.env.NOTE_TABLE_NOTE_TAGS
+    noteTags: process.env.NOTE_TABLE_NOTE_TAGS,
+    noteColor: process.env.NOTE_TABLE_Note_COLOR
 }
 const SQL = new SQLHandler(tableData);
 
@@ -52,12 +53,12 @@ const DeleteNote = async (id) => {
    await SQL.DeleteElement(id);
 }
 
-const AddNewNote = async (title, content, tags) => {
-    await SQL.AddElement([1, title, content, tags]);
+const AddNewNote = async (title, content, tags, color) => {
+    await SQL.AddElement([1, title, content, tags, color]);
 }
 
-const EditNote = async (id, title, content, tags) => {
-    await SQL.UpdateElement(id, [1, title, content, tags]);
+const EditNote = async (id, title, content, tags, color) => {
+    await SQL.UpdateElement(id, [1, title, content, tags, color]);
 }
 
 module.exports = {

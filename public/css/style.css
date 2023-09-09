@@ -3,8 +3,6 @@
 
     --primary-background-color: #131316;
 
-    --card-header-color: #8EE3EF;
-
     --font-dull: gray;
 
     --font-x-large: 2.5vmax;
@@ -20,9 +18,19 @@
     --edit-highlight: #FFBA49;
 }
 
+@media screen and (max-width: 600px){
+    :root{
+        --font-x-large: 4vmax;
+        --font-large: 3vmax;
+        --font-medium: 2vmax;
+        --fonr-small: 1vmax;
+    }
+}
+
 *{
     color: white;
     font-family: 'Dosis', sans-serif;
+    text-shadow: 2px 2px 1px var(--background-color);
 
     margin: 0;
     padding: 0;
@@ -56,7 +64,9 @@ input, textarea{
 
     border-radius: 1vmax;
     box-shadow: var(--shadow) 10px 10px 20px;
+    text-shadow: none;
 }
+
 
 label{
     font-size: var(--font-large);
@@ -127,6 +137,12 @@ form{
     align-items: center;
 }
 
+.grid{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 1vmax
+}
+
 .flex-end{
     justify-self: end;
 }
@@ -148,6 +164,10 @@ form{
 .p-100{
     width: 100%;
     height: 100%;
+}
+
+.fit{
+    height: fit-content;
 }
 
 .pad-1{
@@ -181,7 +201,6 @@ form{
     padding: 1vmax;
     min-height: fit-content;
 
-    background-color: var(--card-header-color);
     font-size: var(--font-large);
 
     text-align: center;
@@ -221,13 +240,5 @@ form{
     background-color: var(--edit-highlight);
 }
 
-@media screen and (max-width: 600px){
-    :root{
-        --font-x-large: 4vmax;
-        --font-large: 3vmax;
-        --font-medium: 2vmax;
-        --fonr-small: 1vmax;
-    }
-}
 
 

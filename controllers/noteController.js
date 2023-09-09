@@ -3,14 +3,16 @@ const arrayBuilder = require("../utils/arrayBuilder.js");
 
 const AddNote = async (req, res) => {
     const tagArray = arrayBuilder.GetStringArrayFromString(req.body.tags, ",");
-    await model.AddNewNote(req.body.title, req.body.content, tagArray);
+
+    console.log(req.body.color);
+    await model.AddNewNote(req.body.title, req.body.content, tagArray, req.body.color);
 
     res.redirect('/notes');    
 };
 
 const EditNote = async (req, res) => {
     const tagArray = arrayBuilder.GetStringArrayFromString(req.body.tags, ",");
-    await model.EditNote(req.params.id, req.body.title, req.body.content, tagArray);
+    await model.EditNote(req.params.id, req.body.title, req.body.content, tagArray, req.body.color);
 
     res.redirect('/notes');
 };

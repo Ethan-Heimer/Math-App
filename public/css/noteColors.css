@@ -1,0 +1,278 @@
+:root{
+    --card-header-color-one: #E56B6F ;
+    --card-header-color-two:  #FFBA49;
+    --card-header-color-three: #F1EDA7 ;
+    --card-header-color-four: #85FF9E;
+    --card-header-color-five: #8EE3EF;
+    --card-header-color-six:  #AF90A9;
+
+    --card-header-color-seven: #F0A8AB ;
+    --card-header-color-eight:  #FFD085;
+    --card-header-color-nine: #FAF8DC ;
+    --card-header-color-ten: #C2FFCE;
+    --card-header-color-eleven: #C9F2F7;
+    --card-header-color-twelve:  #D4C4D1;
+
+    --card-header-color-thirteen: #DE3F44 ;
+    --card-header-color-fourteen:  #FFA10A;
+    --card-header-color-fifteen: #EBE270 ;
+    --card-header-color-sixteen: #33FF5C;
+    --card-header-color-seventeen: #4ED3E4;
+    --card-header-color-eighteen:  #8E6788;
+
+    --card-header-color-nineteen: #AE1E22 ;
+    --card-header-color-twenty:  #B87100;
+    --card-header-color-twentyone: #E0D429 ;
+    --card-header-color-twentytwo: #00E02D;
+    --card-header-color-twentythree: #1DB0C3;
+    --card-header-color-twentyfour:  #5F455B;
+
+    --card-header-color-twentyfive: #F9DCDD ;
+    --card-header-color-twentysix:  #FFEFD6;
+    --card-header-color-twentyseven: #FAF8DB ;
+    --card-header-color-twentyeight: #D6FFDE;
+    --card-header-color-twentynine: #DCF6FA;
+    --card-header-color-thirty:  #EEE7ED;
+}
+
+
+.c1{
+    background-color: var(--card-header-color-one);
+}
+.c2{
+    background-color: var(--card-header-color-two);
+}
+.c3{
+    background-color: var(--card-header-color-three);
+}
+.c4{
+    background-color: var(--card-header-color-four);
+}
+.c5{
+    background-color: var(--card-header-color-five);
+}
+.c6{
+    background-color: var(--card-header-color-six);
+}
+
+.c7{
+    background-color: var(--card-header-color-seven);
+}
+.c8{
+    background-color: var(--card-header-color-eight);
+}
+.c9{
+    background-color: var(--card-header-color-nine);
+}
+.c10{
+    background-color: var(--card-header-color-ten);
+}
+.c11{
+    background-color: var(--card-header-color-eleven);
+}
+.c12{
+    background-color: var(--card-header-color-twelve);
+}
+
+.c13{
+    background-color: var(--card-header-color-thirteen);
+}
+.c14{
+    background-color: var(--card-header-color-fourteen);
+}
+.c15{
+    background-color: var(--card-header-color-fifteen);
+}
+.c16{
+    background-color: var(--card-header-color-sixteen);
+}
+.c17{
+    background-color: var(--card-header-color-seventeen);
+}
+.c18{
+    background-color: var(--card-header-color-eighteen);
+}
+
+.c19{
+    background-color: var(--card-header-color-nineteen);
+}
+.c20{
+    background-color: var(--card-header-color-twenty);
+}
+.c21{
+    background-color: var(--card-header-color-twentyone);
+}
+.c22{
+    background-color: var(--card-header-color-twentytwo);
+}
+.c23{
+    background-color: var(--card-header-color-twentythree);
+}
+.c24{
+    background-color: var(--card-header-color-twentyfour);
+}
+
+.c25{
+    background-color: var(--card-header-color-twentyfive);
+}
+.c26{
+    background-color: var(--card-header-color-twentysix);
+}
+.c27{
+    background-color: var(--card-header-color-twentyseven);
+}
+.c28{
+    background-color: var(--card-header-color-twentyeight);
+}
+.c29{
+    background-color: var(--card-header-color-twentynine);
+}
+.c30{
+    background-color: var(--card-header-color-thirty);
+}
+
+input[type='radio']:after {
+    width: 1vmax;
+    height: 1vmax;
+    top: -8px;
+    left: -4px;
+    position: relative;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid var(--background-color);
+
+    transition: 0.1s;
+}
+
+input[type='radio']:hover:after{
+    scale: 1.2;
+}
+
+input[type='radio']:checked:after {
+    position: relative;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio'].c1:after {
+    background-color: var(--card-header-color-one);
+}
+
+input[type='radio'].c2:after {
+    background-color: var(--card-header-color-two);
+}
+
+input[type='radio'].c3:after {
+    background-color: var(--card-header-color-three);
+}
+
+input[type='radio'].c4:after {
+    background-color: var(--card-header-color-four);
+}
+input[type='radio'].c5:after {
+    background-color: var(--card-header-color-five);
+}
+input[type='radio'].c6:after {
+    background-color: var(--card-header-color-six);
+}
+
+input[type='radio'].c7:after {
+    background-color: var(--card-header-color-seven);
+}
+
+input[type='radio'].c8:after {
+    background-color: var(--card-header-color-eight);
+}
+
+input[type='radio'].c9:after {
+    background-color: var(--card-header-color-nine);
+}
+
+input[type='radio'].c10:after {
+    background-color: var(--card-header-color-ten);
+}
+input[type='radio'].c11:after {
+    background-color: var(--card-header-color-eleven);
+}
+input[type='radio'].c12:after {
+    background-color: var(--card-header-color-twelve);
+}
+
+input[type='radio'].c13:after {
+    background-color: var(--card-header-color-thirteen);
+}
+
+
+input[type='radio'].c14:after {
+    background-color: var(--card-header-color-fourteen);
+}
+
+input[type='radio'].c15:after {
+    background-color: var(--card-header-color-fifteen);
+}
+
+input[type='radio'].c16:after {
+    background-color: var(--card-header-color-sixteen);
+}
+input[type='radio'].c17:after {
+    background-color: var(--card-header-color-seventeen);
+}
+input[type='radio'].c18:after {
+    background-color: var(--card-header-color-eighteen);
+}
+
+
+input[type='radio'].c19:after {
+    background-color: var(--card-header-color-nineteen);
+}
+
+input[type='radio'].c20:after {
+    background-color: var(--card-header-color-twenty);
+}
+
+input[type='radio'].c21:after {
+    background-color: var(--card-header-color-twentyone);
+}
+
+input[type='radio'].c22:after {
+    background-color: var(--card-header-color-twentytwo);
+}
+input[type='radio'].c23:after {
+    background-color: var(--card-header-color-twentythree);
+}
+input[type='radio'].c24:after {
+    background-color: var(--card-header-color-twentyfour);
+}
+
+
+input[type='radio'].c25:after {
+    background-color: var(--card-header-color-twentyfive);
+}
+
+input[type='radio'].c26:after {
+    background-color: var(--card-header-color-twentysix);
+}
+
+input[type='radio'].c27:after {
+    background-color: var(--card-header-color-twentyseven);
+}
+
+input[type='radio'].c28:after {
+    background-color: var(--card-header-color-twentyeight);
+}
+input[type='radio'].c29:after {
+    background-color: var(--card-header-color-twentynine);
+}
+input[type='radio'].c30:after {
+    background-color: var(--card-header-color-thirty);
+}
+
+
+#Color-Select{
+    box-shadow: var(--shadow) 10px 10px 15px;
+    border-radius: var(--rounded);
+    background-color: var(--background-color);
+}
