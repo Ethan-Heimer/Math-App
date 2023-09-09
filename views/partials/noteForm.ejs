@@ -1,7 +1,7 @@
 <form class="s-75 primary-color" <%if(fact != null){%>
-                                    action="/notes/edit<%=fact.id%>"
+                                    action="/editor/edit/<%=fact.id%>"
                                  <%}else{%>
-                                    action="/notes/add"
+                                    action="/editor/add"
                                  <%}%> enctype="multipart/form-data" method="POST">
     <legend class="center-flex p-100">
         <h1 class="font-x-large"><%if(fact != null){%>

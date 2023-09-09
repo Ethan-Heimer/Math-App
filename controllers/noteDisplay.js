@@ -1,6 +1,7 @@
 const model = require("../model/noteDatabase.js");
 const arrayBuilder = require("../utils/arrayBuilder");
 
+/*
 function DisplayFiltersInBody(){
     return (req, res) => {
         const filters = arrayBuilder.GetStringArrayFromString(req.body.filters, ",")
@@ -55,12 +56,30 @@ const RenderDisplay = async (req, res) => {
     const notes = await model.GetNotesByIds(ids)
     res.render("notes", {notes, filters: filters});
 }
+*/
+
+async function Display(req, res){
+    const notes = await GetNotesByFilter(req.params.filters);
+
+    res.render("notes", {notes, filters: req.params.filters})
+}
+
+async function GetNotesByFilter(filters){
+    if(filters == null)
+        return await model.GetAllNotes();
+    
+    const filtersArray = arrayBuilder.GetStringArrayFromString(filters, ",")
+    const notes = await model.GetNotesByTag(filtersArray);
+
+    return notes;
+}
+
+async function SetFilters(req, res){
+    res.redirect(`/notes/${req.body.filters}`);
+}
+
 
 module.exports = {
-   Display,
-   DisplayIdsInEndpoint,
-   DisplayFilters,
-   DisplayFiltersInBody,
-   DisplayAllNotes,
-   RenderDisplay
+   Display, 
+   SetFilters
 }

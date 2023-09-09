@@ -1,17 +1,18 @@
 const model = require("../model/noteDatabase.js");
 
-const DisplayFromURLId = async (req, res) => {
-    const note = await model.GetNoteById(req.params.id);
-    Display(note)(req, res);
+async function Display(req, res){
+    const fact = await GetNote(req.params.id);
+    
+    res.render("createNote", {fact});
 }
 
-function Display(note){
-    return (req, res) => {
-        res.render("createNote", {fact: note});
-    }
+async function GetNote(id){
+    if(id == null)
+        return null;
+
+    return await model.GetNoteById(id);
 }
 
 module.exports = {
     Display,
-    DisplayFromURLId
 }
