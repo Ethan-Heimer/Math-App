@@ -1,4 +1,4 @@
-<form class="s-75 primary-color" <%if(fact != null){%>
+<form class="s-75 primary-color fit pad-1" <%if(fact != null){%>
                                     action="/editor/edit/<%=fact.id%>"
                                  <%}else{%>
                                     action="/editor/add"
@@ -30,7 +30,49 @@
                                                                                    <%}%>>
         </div>
 
-        <button type="submit" class="hover-scale font-large secondary-color flex-end" id="add-button"><%if(fact != null){%>
+        <div class="m-1 center">
+            <label for="color">Fact Color</label> 
+            <div class="grid pad-1" id="Color-Select">
+                <input class="c25" type="radio" id="color" name="color" value="25">
+                <input class="c26" type="radio" id="color" name="color" value="26">
+                <input class="c27" type="radio" id="color" name="color" value="27">
+                <input class="c28" type="radio" id="color" name="color" value="28">
+                <input class="c29" type="radio" id="color" name="color" value="29">
+                <input class="c30" type="radio" id="color" name="color" value="30">
+                
+                <input class="c7" type="radio" id="color" name="color" value="7">
+                <input class="c8" type="radio" id="color" name="color" value="8">
+                <input class="c9" type="radio" id="color" name="color" value="9">
+                <input class="c10" type="radio" id="color" name="color" value="10">
+                <input class="c11" type="radio" id="color" name="color" value="11">
+                <input class="c12" type="radio" id="color" name="color" value="12">
+                
+                <input class="c1" type="radio" id="color" name="color" value="1">
+                <input class="c2" type="radio" id="color" name="color" value="2">
+                <input class="c3" type="radio" id="color" name="color" value="3">
+                <input class="c4" type="radio" id="color" name="color" value="4">
+                <input class="c5" type="radio" id="color" name="color" value="5" checked="checked">
+                <input class="c6" type="radio" id="color" name="color" value="6">
+
+                <input class="c13" type="radio" id="color" name="color" value="13">
+                <input class="c14" type="radio" id="color" name="color" value="14">
+                <input class="c15" type="radio" id="color" name="color" value="15">
+                <input class="c16" type="radio" id="color" name="color" value="16">
+                <input class="c17" type="radio" id="color" name="color" value="17">
+                <input class="c18" type="radio" id="color" name="color" value="18">
+
+                <input class="c19" type="radio" id="color" name="color" value="19">
+                <input class="c20" type="radio" id="color" name="color" value="20">
+                <input class="c21" type="radio" id="color" name="color" value="21">
+                <input class="c22" type="radio" id="color" name="color" value="22">
+                <input class="c23" type="radio" id="color" name="color" value="23">
+                <input class="c24" type="radio" id="color" name="color" value="24">
+            </div>
+           
+        </div>
+
+
+        <button type="submit" class="hover-scale font-large secondary-color flex-end pad-1" id="add-button"><%if(fact != null){%>
                                                                                                         Edit  
                                                                                                       <%}else{%> 
                                                                                                         Add

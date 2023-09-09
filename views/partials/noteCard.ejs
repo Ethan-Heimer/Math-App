@@ -1,12 +1,12 @@
 <div class="card">
-    <h1 class="header"><%=note.note_title%></h1>    
+    <h1 class="header c<%=note.note_color%>"><%=note.note_title%></h1>    
 
     <div class="content center pad-1">
         <p><%=note.note_content%></p>
     </div>
     
     <div class="footer">
-        <%=note.note_tags%>#<%=note.id%>
+        <%=note.note_tags%>#<%=note.id%>c:<%=note.note_color%>
 
         <div>
            <button id="edit">
