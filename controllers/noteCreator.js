@@ -1,9 +1,8 @@
 const model = require("../model/noteDatabase.js");
 
-const DisplayFromURLId = (req, res) => {
-    model.GetNoteById(req.params.id, (note) => {
-        Display(note)(req, res);
-    })
+const DisplayFromURLId = async (req, res) => {
+    const note = await model.GetNoteById(req.params.id);
+    Display(note)(req, res);
 }
 
 function Display(note){

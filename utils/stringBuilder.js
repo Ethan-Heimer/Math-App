@@ -1,70 +1,70 @@
-const arrayBuilder = require("./arrayBuilder.js");
-
-function formatToSQLArray(string){
-    //Poggers, Test => {"Poggers", "Test"}
-    const elements = arrayBuilder.GetStringArrayFromString(string, ",");
-
-    let resault = `{`;
-    for(let i = 0; i < elements.length; i++){
-        resault += `"${elements[i]}"`;
-
-        if(!IfEndOfLoop(elements, i))
-            resault += ', ';
-    }
-    resault += '}'
-
-    return resault;
-}
-
-function constructSQLArrayComparison(array, contition){ //give better name
-    //["Poggers", "Test"] => "poggers" + condition or "Test" + condition...
-
-    let resault = "";
-    for(var i = 0; i < array.length; i++){
-        resault += `'${array[i]}' = ${contition}`;
-
-        if(!IfEndOfLoop(array, i))
-            resault += " or ";
+class StringBuilder {
+    constructor(){
+        this.string = "";
     }
 
-    return resault;
-}
+    append(input){
+        this.string += input.toString();
 
-function constructSQLIntOrQueryFromArray(array, condition){ //give better name
-    //["Poggers", "Test"] => condition + 'poggers' or condition + 'test'    
-    let res = "";
-
-    for(var i = 0; i < array.length; i++){
-        res += `${condition} ${array[i]}`;
-
-        if(!IfEndOfLoop(array, i))
-            res += " or ";
+        return this;
     }
 
-    return res;
-}
+    appendJoin(char, array){
+        this.append(array.join(char));
 
-function formatArrayToUrlArray(array){
-    //[23, 24, 25] => 23,24,25
-    let res = '';
-
-    for(var i = 0; i < array.length; i++){
-        res += array[i];
-
-        if(!IfEndOfLoop(array, i))
-            res += ",";
+        return this;
     }
 
-    return res;
+    appendFormat(input, IFormat){
+       this.append(IFormat.format(input));
+
+       return this;
+    }
+
+    clear(){
+       this.string = "";
+
+       return this;
+    }
+
+    insert(index, string){
+        let newString = this.string.split('');
+        newString.splice(index, 0, string.toString());
+        this.string = newString.join('');
+
+        return this;
+    }
+
+    insertJoin(index, array, char)
+    {
+        this.insert(index, array.join(char));
+
+        return this;
+    }
+
+    insertFormat(index, input, IFormat){
+        this.insert(index, IFormat.format(input));
+
+        return this;
+    }
+
+    remove(indexOne, indexTwo){
+        this.string = this.string.split('').splice(indexOne, indexTwo).join('');
+
+        return this;
+    }
+
+    constructString(){
+        return this.string;
+    }
 }
 
-function IfEndOfLoop(array, i){
-    return i == array.length-1;
+class IFormat{
+    format(string){}
 }
+
 
 module.exports = {
-    formatToSQLArray,
-    constructSQLArrayComparison,
-    constructSQLIntOrQueryFromArray,
-    formatArrayToUrlArray
+    StringBuilder,
+    IFormat
 }

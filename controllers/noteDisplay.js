@@ -1,6 +1,5 @@
 const model = require("../model/noteDatabase.js");
 const arrayBuilder = require("../utils/arrayBuilder");
-const stringBuilder = require("../utils/stringBuilder.js");
 
 function DisplayFiltersInBody(){
     return (req, res) => {
@@ -11,12 +10,16 @@ function DisplayFiltersInBody(){
 }
 
 function DisplayFilters(filters){
-    return (req, res) =>{
+    return async (req, res) =>{
         if(filters.length != 0)
         {
-            model.GetNotesByTag(filters, (notes) => {
-                const ids = model.GetNoteIds(notes);
-                Display(ids, filters)(req, res)})
+            const notes = await model.GetNotesByTag(filters);
+            const ids = await model.GetNoteIds(notes);
+
+            console.log(ids);
+
+            Display(ids, filters)(req, res)
+           
         }
         else{
            DisplayAllNotes()(req, res);
@@ -33,10 +36,9 @@ function DisplayIdsInEndpoint(){
 }
 
 function DisplayAllNotes(){
-    return (req, res) => {
-        model.GetAllNoteIds(ids => {
-            Display(ids)(req, res);
-        })
+    return async (req, res) => {
+        const ids = await model.GetAllNoteIds();
+        Display(ids)(req, res);
     }
 }
 
@@ -46,13 +48,12 @@ function Display(ids, filters){
     }
 }
 
-const RenderDisplay = (req, res) => {
+const RenderDisplay = async (req, res) => {
     const ids = arrayBuilder.GetIntArrayFromString(req.params.ids, ",");
     const filters = req.params.filters;
 
-    model.GetNotesByIds(ids, (notes) => {
-        res.render("notes", {notes, filters: filters});
-    });
+    const notes = await model.GetNotesByIds(ids)
+    res.render("notes", {notes, filters: filters});
 }
 
 module.exports = {
