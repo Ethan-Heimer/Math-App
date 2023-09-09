@@ -30,7 +30,7 @@
 *{
     color: white;
     font-family: 'Dosis', sans-serif;
-    text-shadow: 2px 2px 1px var(--background-color);
+    text-shadow: 2px 2px 3px var(--background-color);
 
     margin: 0;
     padding: 0;
