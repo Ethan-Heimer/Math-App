@@ -16,6 +16,9 @@
 
     --grabage-highlight: #E56B6F;
     --edit-highlight: #FFBA49;
+
+    --error-color: #E56B6F;
+    --error-background: #E56B6F55;
 }
 
 @media screen and (max-width: 600px){
@@ -36,6 +39,8 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+
+   
 }
 
 body{
@@ -67,6 +72,14 @@ input, textarea{
     text-shadow: none;
 }
 
+input{
+    transition: .1s;
+}
+
+input:hover{
+    scale: 1.1;
+}
+
 
 label{
     font-size: var(--font-large);
@@ -87,6 +100,8 @@ button:hover{
 
 form{
     border-radius: var(--rounded);
+    box-shadow: var(--shadow) 10px 10px 15px;
+    min-width: fit-content;
 }
 
 .lock{
@@ -152,6 +167,10 @@ form{
     height: 75vh;
 }
 
+.w-25{
+    width: 25vw;
+}
+
 .s-100{
     width: 100vw;
     height: 100vh;
@@ -172,6 +191,13 @@ form{
 
 .pad-1{
     padding: 1vmax;
+}
+
+.error{
+    color: var(--error-color);
+    background-color: var(--error-background);
+    padding: .5vmax;
+    border-radius: var(--rounded);
 }
 
 .card{

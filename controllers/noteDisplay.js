@@ -59,17 +59,19 @@ const RenderDisplay = async (req, res) => {
 */
 
 async function Display(req, res){
-    const notes = await GetNotesByFilter(req.params.filters);
+   
+    const notes = await GetNotesByFilter(req.params.filters, req.session.userId);
 
     res.render("notes", {notes, filters: req.params.filters})
 }
 
-async function GetNotesByFilter(filters){
+async function GetNotesByFilter(filters, userId){
     if(filters == null)
-        return await model.GetAllNotes();
+        return await model.GetAllNotes(userId);
     
+        console.log(userId, "user id");
     const filtersArray = arrayBuilder.GetStringArrayFromString(filters, ",")
-    const notes = await model.GetNotesByTag(filtersArray);
+    const notes = await model.GetNotesByTag(filtersArray, userId);
 
     return notes;
 }

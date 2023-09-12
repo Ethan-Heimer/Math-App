@@ -23,39 +23,44 @@ module.exports = class SQLHandler{
         return elements.map(x => this.GetElementId(x));
     }
 
-    async GetElementById(id){
-        const sql = SQLBuilder.SelectQuery(this.tableData.name, `id = ${id}`, '*');
-        console.log(sql);
+    async GetElementById(id, userId){
+        const sql = SQLBuilder.ConditionalSelectQuery(this.tableData.name, `id = ${id}`, '*', userId);
+        console.log("Get Element By Id", sql);
 
         return (await this.client.query(sql)).rows[0];
     }
 
-    async GetElementsFromIds(ids){
-        const sql = SQLBuilder.ChainedSelectQuery(this.tableData.name, "id = ", ids, "or", "*");
+    async GetElementsFromIds(ids, userId){
+        const sql = SQLBuilder.ChainedSelectQuery(this.tableData.name, "id = ", ids, "or", "*", userId);
         console.log(sql);
 
         return (await this.client.query(sql)).rows;
     }
 
-    async GetElementsByArrayAttribute(attributeName, values){
-        const sql = SQLBuilder.ChainedArrayComparison(this.tableData.name, this.#GetTableValue(attributeName), values, "or", "*");
+    async GetElementsByArrayAttribute(attributeName, values, userId){
+        const sql = SQLBuilder.ChainedArrayComparison(this.tableData.name, this.#GetTableValue(attributeName), values, "or", "*", userId);
         console.log(sql);
         
         return (await this.client.query(sql)).rows;
     }
 
-    //GetElementsByAttribute (ill make this hoe when i feel like it)
+    async GetElementByAttribute(attributeName, value, userId){
+        const sql = SQLBuilder.ConditionalSelectQuery(this.tableData.name, `${this.#GetTableValue(attributeName)} = '${value}'`, "*", userId);
+        console.log("Get Element By Attribute", sql);
+       
+        return (await this.client.query(sql)).rows[0];
+    }
 
-    async GetAllElements(){
-        const sql = SQLBuilder.SelectQuery(this.tableData.name, "", "*");
+    async GetAllElements(userId){
+        const sql = SQLBuilder.SelectQuery(this.tableData.name, "*", userId);
         console.log(sql);
        
         return (await this.client.query(sql)).rows;
     }
 
-    async DeleteElement(id){
+    async DeleteElement(id, userId){
         //update too sql builder
-        const sql = SQLBuilder.DeleteQuery(this.tableData.name, `id = ${id}`);
+        const sql = SQLBuilder.DeleteQuery(this.tableData.name, `id = ${id}`, userId);
 
         await this.client.query(sql);
     }

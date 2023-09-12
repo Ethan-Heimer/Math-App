@@ -1,0 +1,21 @@
+<%-include("partials/header.ejs")%>
+<body>
+
+    <div class="center s-100">
+        <div class="center">
+            <h1 class="font-x-large">Welcome To The Fact Farm 🌾</h1>
+            <%if(create) {%>
+                <%-include("partials/createForm.ejs")%>
+            <%}else{%> 
+                <%-include("partials/loginForm.ejs")%>
+            <%}%>
+
+            <%if(error != null) {%>
+                <p class="font-medium error"><%=error%></p>
+            <%}%>
+        </div>
+        
+    </div>
+
+</body>
+</html>

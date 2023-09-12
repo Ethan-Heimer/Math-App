@@ -28,37 +28,37 @@ const GetNoteIds = async(notes) => {
     return ids;
 }
 
-const GetNoteById = async(id) => {
-    return await SQL.GetElementById(id);
+const GetNoteById = async(id, userId) => {
+    return await SQL.GetElementById(id, userId);
 }
 
-const GetNotesByIds = async (ids) => {
-    return await SQL.GetElementsFromIds(ids);
+const GetNotesByIds = async (ids, userId) => {
+    return await SQL.GetElementsFromIds(ids, userId);
 }
 
-const GetNotesByTag= async (tags) => {
-    return await SQL.GetElementsByArrayAttribute("noteTags", tags);
+const GetNotesByTag= async (tags, userId) => {
+    return await SQL.GetElementsByArrayAttribute("noteTags", tags, userId);
 }
 
-const GetAllNotes = async () => {
-    return await SQL.GetAllElements();
+const GetAllNotes = async (userId) => {
+    return await SQL.GetAllElements(userId);
 }
 
-const GetAllNoteIds = async () => {
-    const notes = await SQL.GetAllElements();
+const GetAllNoteIds = async (userId) => {
+    const notes = await SQL.GetAllElements(userId);
     return await SQL.GetElementsIds(notes);
 }
 
-const DeleteNote = async (id) => {
-   await SQL.DeleteElement(id);
+const DeleteNote = async (id, userId) => {
+   await SQL.DeleteElement(id, userId);
 }
 
-const AddNewNote = async (title, content, tags, color) => {
-    await SQL.AddElement([1, title, content, tags, color]);
+const AddNewNote = async (title, content, tags, color, userId) => {
+    await SQL.AddElement([userId, title, content, tags, color]);
 }
 
-const EditNote = async (id, title, content, tags, color) => {
-    await SQL.UpdateElement(id, [1, title, content, tags, color]);
+const EditNote = async (id, title, content, tags, color, userId) => {
+    await SQL.UpdateElement(id, [userId, title, content, tags, color]);
 }
 
 module.exports = {
