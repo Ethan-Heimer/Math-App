@@ -1,18 +1,32 @@
 const SB = require("./stringBuilder.js");
 
-function SelectQuery(tableName, condition, elementType){
+function SelectQuery(tableName, elementType, userId){
     const stringBuilder = new SB.StringBuilder();
     stringBuilder.append(`select ${elementType} from ${tableName} `);
-    
-    if(condition != '')
-        stringBuilder.append(`where ${condition} `);
+
+    if(userId != null)
+        stringBuilder.append(`where user_id = ${userId} `);
 
     stringBuilder.append("order by id desc");
     
     return stringBuilder.constructString();
 }
 
-function ChainedSelectQuery(tableName, condition, conditionValues, chainType, elementType){
+function ConditionalSelectQuery(tableName, condition, elementType, userId){
+    const stringBuilder = new SB.StringBuilder();
+    stringBuilder.append(`select ${elementType} from ${tableName} `);
+
+    stringBuilder.append(`where ${condition} `)
+
+    if(userId != null)
+        stringBuilder.append(`and user_id = ${userId}`);
+
+    stringBuilder.append("order by id desc");
+    
+    return stringBuilder.constructString();
+}
+
+function ChainedSelectQuery(tableName, condition, conditionValues, chainType, elementType, userId){
     const stringBuilder = new SB.StringBuilder();
     stringBuilder.append(`select ${elementType} from ${tableName} where`);
 
@@ -26,17 +40,20 @@ function ChainedSelectQuery(tableName, condition, conditionValues, chainType, el
             stringBuilder.append(` ${chainType} `);
     }
 
+    if(userId != null)
+        stringBuilder.append(`and user_id = ${userId} `);
+
     stringBuilder.append("order by id desc");
 
     return stringBuilder.constructString();
 }
 
-function ArrayComarison(tableName, arrayName, value, queryFor){
+function ArrayComarison(tableName, arrayName, value, queryFor, userId){
     let formattedVal = new SQlValueFormatter().format(value);
-    return SelectQuery(tableName, `${formattedVal} = any(${arrayName})`, queryFor);
+    return ConditionalSelectQuery(tableName, `${formattedVal} = any(${arrayName})`, queryFor, userId);
 }
 
-function ChainedArrayComparison(tableName, arrayName, values, chainType, queryFor){
+function ChainedArrayComparison(tableName, arrayName, values, chainType, queryFor, userId){
     const stringBuilder = new SB.StringBuilder();
     stringBuilder.append(`select ${queryFor} from ${tableName} where`);
 
@@ -49,12 +66,22 @@ function ChainedArrayComparison(tableName, arrayName, values, chainType, queryFo
             stringBuilder.append(` ${chainType} `);
     }
 
-    stringBuilder.append("order by id desc");
+    if(userId != null)
+        stringBuilder.append(`and user_id = ${userId}`);
+
+    stringBuilder.append(" order by id desc");
     return stringBuilder.constructString();
 }
 
-function DeleteQuery(tableName, condition){
-    return `delete from ${tableName} where ${condition}`;
+function DeleteQuery(tableName, condition, userId){
+    const stringBuilder = new SB.StringBuilder();
+
+    stringBuilder.append(`delete from ${tableName} where ${condition}`);
+
+    if(userId != null)
+        stringBuilder.append(` and user_id = ${userId}`);
+
+    return stringBuilder.constructString();
 }
 
 function InsertQuery(tableName, headers, values){
@@ -68,7 +95,7 @@ function InsertQuery(tableName, headers, values){
     return stringBuilder.constructString();
 }
 
-function UpdateQuery(tableName, headers, values, condition){
+function UpdateQuery(tableName, headers, values, condition, userId){
     const stringBuilder = new SB.StringBuilder();
     stringBuilder.append(`update ${tableName} set `);
 
@@ -83,6 +110,9 @@ function UpdateQuery(tableName, headers, values, condition){
     }
 
     stringBuilder.append(` where ${condition}`);
+
+    if(userId != null)
+        stringBuilder.append(` and user_id = ${userId}`);
 
     return stringBuilder.constructString()
 }
@@ -132,6 +162,7 @@ class SQLValueListFormatter extends SB.IFormat{
 
 module.exports = {
     SelectQuery,
+    ConditionalSelectQuery,
     ChainedSelectQuery,
     ArrayComarison,
     ChainedArrayComparison,

@@ -17,19 +17,7 @@
                                                                                     <%}%>>
         </div>
 
-        <div class="m-1 center">
-            <label for="Content">Fact Content</label>
-            <textarea id="content" name="content" placeholder="Fact Content!" rows="8" cols="80"> <% if(fact != null){ %><%=fact.note_content%><%}%></textarea>
-        </div>
-
-        <div class="m-1 center">
-            <label for="tags">Fact Tags</label>
-            <p class="font-medium dull">(Seperate tags with a ,)</p>
-            <input type="text" id="tags" name="tags" placeholder="Enter Fact Tags" <% if(fact != null){ %>
-                                                                                        value="<%=fact.note_tags.join(", ")%>"
-                                                                                   <%}%>>
-        </div>
-
+        
         <div class="m-1 center">
             <label for="color">Fact Color</label> 
             <div class="grid pad-1" id="Color-Select">
@@ -69,6 +57,20 @@
                 <input class="c24" type="radio" id="color" name="color" value="24">
             </div>
            
+        </div>
+
+
+        <div class="m-1 center">
+            <label for="Content">Fact Content</label>
+            <textarea id="content" name="content" placeholder="Fact Content!" rows="8" cols="80"> <% if(fact != null){ %><%=fact.note_content%><%}%></textarea>
+        </div>
+
+        <div class="m-1 center">
+            <label for="tags">Fact Tags</label>
+            <p class="font-medium dull">(Seperate tags with a ,)</p>
+            <input type="text" id="tags" name="tags" placeholder="Enter Fact Tags" <% if(fact != null){ %>
+                                                                                        value="<%=fact.note_tags.join(", ")%>"
+                                                                                   <%}%>>
         </div>
 
 

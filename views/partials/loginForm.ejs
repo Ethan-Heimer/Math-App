@@ -1,0 +1,23 @@
+<form class="primary-color fit pad-1 w-25 m-1" action="/user/login/attempt/" method="post">
+    <legend class="center-flex p-100">
+        <h1 class="font-x-large">✨Login!✨</h1>
+
+        <div class="center pad-1">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="<%=username%>" placeholder="Username 🦊">
+        </div>
+
+        <div class="center pad-1">
+            <label for="Password">Password</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <div class="center">
+            <button type="submit" class="font-large secondary-color pad-1">Login!</button>
+        </div>
+      
+    </legend>
+</form>
+
+<p class="font-medium">or</p>
+<button class="primary-color m-1 font-medium"><a href="/login/create">Create an Account!</a></button>
