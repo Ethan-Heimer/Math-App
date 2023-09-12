@@ -1,7 +1,7 @@
 const model = require("../model/noteDatabase.js");
 
 async function Display(req, res){
-    const fact = await GetNote(req.params.id, userId);
+    const fact = await GetNote(req.params.id, req.session.userId);
     
     res.render("createNote", {fact});
 }
