@@ -5,7 +5,7 @@ const session = require("express-session");
 const app = express();
 const noteRoute = require('./routes/NoteRoutes.js');
 const editorRoute = require("./routes/editorRoutes.js");
-const loginRoute = require('./routes/loginRoutes.js');
+const loginRoute = require('./routes/userRoutes.js');
 
 app.use(bodyParser.urlencoded({
     extended: false,
@@ -26,10 +26,12 @@ app.use(express.static("./public/css"));
 app.use(express.static("./public/images"));
 app.use(express.static("./public/js"));
 
-
-
 app.set("view engine", "ejs");
 app.set("views", "views");
+
+app.get("/" , (req, res) => {
+    res.redirect("/user/login");
+})
 
 app.listen(3000, () => {
     console.log("server!!");
