@@ -8,14 +8,16 @@
     <div class="footer">
         <%=note.note_tags%>#<%=note.id%>c:<%=note.note_color%>
 
-        <div>
-           <button id="edit">
-                <a href="/editor/<%=note.id%>"><i class="fa-solid fa-pencil"></i></a>
-           </button>
+        <%if(editable) {%>
+            <div>
+            <button id="edit">
+                    <a href="/editor/<%=note.id%>"><i class="fa-solid fa-pencil"></i></a>
+            </button>
 
-           <button id="delete">
-                <a href="/editor/delete/<%=note.id%>"><i class="fa-solid fa-trash"></i></a>
-           </button>
-        </div>
+            <button id="delete">
+                    <a href="/editor/delete/<%=note.id%>"><i class="fa-solid fa-trash"></i></a>
+            </button>
+            </div>
+        <%}%>
     </div>
 </div>

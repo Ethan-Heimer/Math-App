@@ -8,7 +8,7 @@ const addUser = async (req, res) => {
             const hashedPass = await bcrypt.hash(req.body.password, 10);
             await model.AddNewUser(req.body.email, req.body.username, hashedPass);
         
-            res.status(200).send("Created");
+            res.redirect("/user/login");
         }
         else{
             displayCreator("Passwords do not match", 200, req.body.email, req.body.username)(req, res);
@@ -42,7 +42,7 @@ const login = async (req, res) => {
         if(await bcrypt.compare(password, user.password)){
             req.session.userId = user.id;
             console.log(req.session.userId);
-            res.redirect("/notes");
+            res.redirect(`/notes/${req.session.userId}`);
         }
         else{
            displayLogin("Username or Password is wrong", 200, req.body.username)(req, res)
