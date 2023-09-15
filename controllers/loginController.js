@@ -49,8 +49,8 @@ const login = async (req, res) => {
         }
     }
     catch(err){
-        console.log(err.message);
-        displayLogin("Internal Error Occured, Try Again, Error: " + err.message, 500)(req, res)
+        console.log(err);
+        displayLogin("Internal Error Occured, Try Again, Error: " + err, 500)(req, res)
     }
 }
 

@@ -1,20 +1,45 @@
 const {Client} = require("pg");
-const SQLBuilder = require("./sqlBuilder.js");
+const SQL= require("./sqlBuilder.js");
 
 require('dotenv').config();
+
+class SQLConnectionHandler{
+    static connected = false;
+
+    static client = null;
+    
+    static OpenConnection(){
+       if(!this.connected)
+       {
+            this.client = new Client({
+                host: process.env.DATABASE_HOST,
+                user: process.env.DATABASE_USER,
+                port: process.env.DATABASE_PORT,
+                password: process.env.DATABASE_PASSWORD,
+                database: process.env.DATABASE_NAME
+            });
+
+            this.client.connect();
+            this.connected = true;
+       }
+
+       return this.client;
+    }
+
+    static CloseConnection() {
+        if(this.connected)
+        {
+            this.client.end();
+            this.connected = false;
+        }
+    }
+}
 
 module.exports = class SQLHandler{
     constructor(tableData){
         this.tableData = tableData;
 
-        this.client = new Client({
-            host: process.env.DATABASE_HOST,
-            user: process.env.DATABASE_USER,
-            port: process.env.DATABASE_PORT,
-            password: process.env.DATABASE_PASSWORD,
-            database: process.env.DATABASE_NAME
-        });
-        this.client.connect();
+        this.client = SQLConnectionHandler.OpenConnection();
     }
 
     GetElementId = (element) => parseInt(element.id);
@@ -24,58 +49,124 @@ module.exports = class SQLHandler{
     }
 
     async GetElementById(id, userId){
-        const sql = SQLBuilder.ConditionalSelectQuery(this.tableData.name, `id = ${id}`, '*', userId);
-        console.log("Get Element By Id", sql);
+        const sqlBuilder = new SQL.SQLBuilder();
+        sqlBuilder.Select("*", this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "Id =", id));
 
-        return (await this.client.query(sql)).rows[0];
+        if(userId != null)
+            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        return (await this.client.query(statement)).rows[0];
     }
 
     async GetElementsFromIds(ids, userId){
-        const sql = SQLBuilder.ChainedSelectQuery(this.tableData.name, "id = ", ids, "or", "*", userId);
-        console.log(sql);
+        const sqlBuilder = new SQL.SQLBuilder();
+        const conditions = ids.map(x => SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", x))
 
-        return (await this.client.query(sql)).rows;
+        sqlBuilder.Select("*", this.tableData.name).WhereIts("or", conditions);
+
+        if(userId != null)
+            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        return (await this.client.query(statement)).rows;
     }
 
     async GetElementsByArrayAttribute(attributeName, values, userId){
-        const sql = SQLBuilder.ChainedArrayComparison(this.tableData.name, this.#GetTableValue(attributeName), values, "or", "*", userId);
-        console.log(sql);
+        const sqlBuilder = new SQL.SQLBuilder();
+        const conditions = values.map(x => SQL.Condition(SQL.ConditionFormat["Array"], ` = any(${attributeName}) `, x));
         
-        return (await this.client.query(sql)).rows;
+        sqlBuilder.Select("*", this.tableData.name).WhereIts("or", conditions);
+
+        if(userId != null)
+            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+        
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        return (await this.client.query(statement)).rows;
     }
 
     async GetElementByAttribute(attributeName, value, userId){
-        const sql = SQLBuilder.ConditionalSelectQuery(this.tableData.name, `${this.#GetTableValue(attributeName)} = '${value}'`, "*", userId);
-        console.log("Get Element By Attribute", sql);
-       
-        return (await this.client.query(sql)).rows[0];
+        const sqlBuilder = new SQL.SQLBuilder();
+        sqlBuilder.Select("*", this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], `${this.#GetTableValue(attributeName)} =`, value));
+
+        if(userId != null)
+            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        return (await this.client.query(statement)).rows[0];
     }
 
     async GetAllElements(userId){
-        const sql = SQLBuilder.SelectQuery(this.tableData.name, "*", userId);
-        console.log(sql);
-       
-        return (await this.client.query(sql)).rows;
+        const sqlBuilder = new SQL.SQLBuilder();
+        sqlBuilder.Select("*", this.tableData.name);
+
+        if(userId != null)
+            sqlBuilder.Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        return (await this.client.query(statement)).rows;
     }
 
     async DeleteElement(id, userId){
-        //update too sql builder
-        const sql = SQLBuilder.DeleteQuery(this.tableData.name, `id = ${id}`, userId);
+        const sqlBuilder = new SQL.SQLBuilder();
+        sqlBuilder.Delete(this.tableData.name).Where('id = ', id);
+        if(userId != null)
+            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        await this.client.query(sql);
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        await this.client.query(statement);
     }
 
     async AddElement(values){
-        const sql = SQLBuilder.InsertQuery(this.tableData.name, this.#GetTableTitles(), values);
-        console.log(sql);
-       
-        await this.client.query(sql);
+        const sqlBuilder = new SQL.SQLBuilder();
+        sqlBuilder.Insert(this.tableData.name, this.#GetTableTitles(), values)
+
+        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+        await this.client.query(statement);
     }
 
     async UpdateElement(id, values){
-        const sql = SQLBuilder.UpdateQuery(this.tableData.name, this.#GetTableTitles(), values, `id = ${id}`);
-       
-        this.client.query(sql);
+        const sqlBuilder = new SQL.SQLBuilder();
+        sqlBuilder.Update(this.tableData.name);
+
+        const titles = this.#GetTableTitles();
+
+        for(var i = 0; i < titles.length; i++)
+            sqlBuilder.Set(titles[i], values[i]);
+
+        sqlBuilder.Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", id)).Order("Id", SQL.SortOrder["Descending"]);
+
+        const statement = sqlBuilder.End();
+        console.log(statement);
+
+        await this.client.query(statement);
     }
 
     #GetTableValue(key){
@@ -86,6 +177,10 @@ module.exports = class SQLHandler{
        const titles = Object.values(this.tableData);
        titles.shift();
        return titles;
+    }
+
+    async Test(){
+        console.log((await (this.client.query("Select * from users where username = 'CrookedShaft445'"))).rows);
     }
 
 }

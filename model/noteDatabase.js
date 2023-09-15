@@ -37,7 +37,7 @@ const GetNotesByIds = async (ids, userId) => {
 }
 
 const GetNotesByTag= async (tags, userId) => {
-    return await SQL.GetElementsByArrayAttribute("noteTags", tags, userId);
+    return await SQL.GetElementsByArrayAttribute("note_tags", tags, userId);
 }
 
 const GetAllNotes = async (userId) => {

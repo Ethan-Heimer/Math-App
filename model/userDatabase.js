@@ -15,6 +15,10 @@ const AddNewUser = async (email, username, password) => {
 }
 
 const GetUserByName = async (username) =>{
+    SQL.Test();
+    
+    console.log(username);
+    
     const user = await SQL.GetElementByAttribute("Username", username);
     return user;
 }
