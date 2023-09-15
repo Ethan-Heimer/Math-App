@@ -1,128 +1,200 @@
 const SB = require("./stringBuilder.js");
 
-function SelectQuery(tableName, elementType, userId){
-    const stringBuilder = new SB.StringBuilder();
-    stringBuilder.append(`select ${elementType} from ${tableName} `);
+class SQLBuilder{
+    constructor(){
+        this.sql = new SB.StringBuilder();
 
-    if(userId != null)
-        stringBuilder.append(`where user_id = ${userId} `);
+        this.stack = [];
+    }
 
-    stringBuilder.append("order by id desc");
+    Select(key, tableName){
+        const token = this.#CreateToken(this.operationTypes["Command"], this.#GetId(), () => {
+            this.sql.append(`Select ${key} from ${tableName}`);
+        })
+
+        this.#PushStack(token);
+
+        return this;
+    }
+
+    Where(condition){
+        const token = this.#CreateToken(this.operationTypes["Append"], this.#GetId(),  () => {
+            this.sql.append(" where ")
+            this.sql.appendFormat({
+                condition: condition.condition,
+                value: condition.value
+            }, condition.format);
+        })
+
+        this.#PushStack(token);
+
+        return this;
+    }
+
     
-    return stringBuilder.constructString();
-}
+    And(condition){
+        const token = this.#CreateToken(this.operationTypes["Append"], this.#GetId(),  () => {
+            this.sql.append(" and ")
+            this.sql.appendFormat({
+                condition: condition.condition,
+                value: condition.value
+            }, condition.format);
+        })
 
-function ConditionalSelectQuery(tableName, condition, elementType, userId){
-    const stringBuilder = new SB.StringBuilder();
-    stringBuilder.append(`select ${elementType} from ${tableName} `);
+        this.#PushStack(token);
 
-    stringBuilder.append(`where ${condition} `)
-
-    if(userId != null)
-        stringBuilder.append(`and user_id = ${userId}`);
-
-    stringBuilder.append("order by id desc");
+        return this;
+    }
     
-    return stringBuilder.constructString();
-}
 
-function ChainedSelectQuery(tableName, condition, conditionValues, chainType, elementType, userId){
-    const stringBuilder = new SB.StringBuilder();
-    stringBuilder.append(`select ${elementType} from ${tableName} where`);
+    Or(condition){
+        const token = this.#CreateToken(this.operationTypes["Append"], this.#GetId(),  () => {
+            this.sql.append(" or ")
+            this.sql.appendFormat({
+                condition: condition.condition,
+                value: condition.value
+            }, condition.format);
+        })
 
-    const format = new SQlValueFormatter();
+        this.#PushStack(token);
 
-    for(var i = 0; i < conditionValues.length; i++){
-        stringBuilder.append(` ${condition} `)
-        .appendFormat(conditionValues[i], format);
-
-        if(i != conditionValues.length-1)
-            stringBuilder.append(` ${chainType} `);
+        return this;
     }
 
-    if(userId != null)
-        stringBuilder.append(`and user_id = ${userId} `);
+    
+    WhereIts(operation, conditions){
+        for(var i = 0; i < conditions.length; i++){
+            if(this.#PreviousToken().operation === this.operationTypes["Command"])
+                this.Where(conditions[i]);
+            else{
+               switch(operation.toLowerCase())
+               {
+                case "and":
+                    this.And(conditions[i]);
+                    break;
+                case "or":
+                    this.Or(conditions[i]);
+                    break;
+               }
+            }
+        }
 
-    stringBuilder.append("order by id desc");
-
-    return stringBuilder.constructString();
-}
-
-function ArrayComarison(tableName, arrayName, value, queryFor, userId){
-    let formattedVal = new SQlValueFormatter().format(value);
-    return ConditionalSelectQuery(tableName, `${formattedVal} = any(${arrayName})`, queryFor, userId);
-}
-
-function ChainedArrayComparison(tableName, arrayName, values, chainType, queryFor, userId){
-    const stringBuilder = new SB.StringBuilder();
-    stringBuilder.append(`select ${queryFor} from ${tableName} where`);
-
-    const format = new SQlValueFormatter();
-
-    for(var i = 0; i < values.length; i++){
-        stringBuilder.appendFormat(values[i], format).append(` = any(${arrayName})`);
-
-        if(i != values.length-1)
-            stringBuilder.append(` ${chainType} `);
+        return this;
     }
 
-    if(userId != null)
-        stringBuilder.append(`and user_id = ${userId}`);
+    Delete(tableName){
+        const token = this.#CreateToken(this.operationTypes["Command"], this.#GetId(),  () => {
+            this.sql.append(`delete from ${tableName}`);
+        })
 
-    stringBuilder.append(" order by id desc");
-    return stringBuilder.constructString();
-}
+        this.#PushStack(token);
 
-function DeleteQuery(tableName, condition, userId){
-    const stringBuilder = new SB.StringBuilder();
-
-    stringBuilder.append(`delete from ${tableName} where ${condition}`);
-
-    if(userId != null)
-        stringBuilder.append(` and user_id = ${userId}`);
-
-    return stringBuilder.constructString();
-}
-
-function InsertQuery(tableName, headers, values){
-    const stringBuilder = new SB.StringBuilder();
-
-    stringBuilder.append(`insert into ${tableName} (`)
-                 .appendJoin(", ", headers)
-                 .append(") values ")
-                 .appendFormat(values, new SQLValueListFormatter());
-            
-    return stringBuilder.constructString();
-}
-
-function UpdateQuery(tableName, headers, values, condition, userId){
-    const stringBuilder = new SB.StringBuilder();
-    stringBuilder.append(`update ${tableName} set `);
-
-    const formatter = new SQlValueFormatter(false);
-
-    for(let i = 0 ; i < headers.length; i++){
-        stringBuilder.append(`${headers[i]} = `)
-                     .appendFormat(values[i], formatter);
-
-        if(i != headers.length-1)
-            stringBuilder.append(", ");
+        return this;
     }
 
-    stringBuilder.append(` where ${condition}`);
+    Insert(tableName, columns, values){
+        const token = this.#CreateToken(this.operationTypes["Command"], this.#GetId(),  () => {
+            this.sql.append(`insert into ${tableName} (`)
+                            .appendJoin(", ", columns)
+                            .append(") values ")
+                            .appendFormat(values, new SQLValueListFormatter());
+        });
 
-    if(userId != null)
-        stringBuilder.append(` and user_id = ${userId}`);
+        this.#PushStack(token);
 
-    return stringBuilder.constructString()
+        return this;
+    }
+
+    Update(tableName) {
+        const token = this.#CreateToken(this.operationTypes["Command"], this.#GetId(), () => {
+            this.sql.append(`update ${tableName}`)
+        });
+
+        this.#PushStack(token);
+
+        return this;
+    }
+
+    Set(title, value){
+        const id = this.#GetId()
+        
+        const token = this.#CreateToken(this.operationTypes["Append"], id, () => {
+            console.log(this.#PreviousToken(id).spesOp);
+
+            if(this.#PreviousToken(id).operation == this.operationTypes["List"])
+                this.sql.append(", ")
+            else if(this.#PreviousToken(id).operation == this.operationTypes["Command"])
+                this.sql.append(" set ");
+
+            this.sql.append(`${title} = `)
+                    .appendFormat(value, new SQlValueFormatter(false));
+        });
+
+        this.#PushStack(token);
+
+        return this;
+    }
+
+    Order(attribute, order){
+        const token = this.#CreateToken(this.operationTypes["Append"], this.#GetId(), () => {
+            this.sql.append(`order by ${attribute} ${order}`);
+        });
+
+        this.#PushStack(token);
+
+        return this;
+    }
+
+    End(){
+        this.stack.forEach(token => {
+            token.toAppend();
+        })
+        this.sql.append(";");
+
+        const builtStatement = this.sql.constructString();
+
+        this.sql.clear();
+        this.stack = [];
+
+        return builtStatement;
+    }
+
+
+    #PushStack(token){
+        this.stack.push(token);
+    }
+
+    #CreateToken(operationType, id, action){
+        return {
+            operation: operationType,
+            toAppend: action,
+            id
+        }
+    }
+
+    #PreviousToken(id){
+        if(id)
+            return this.stack[id-1];
+        else
+            return this.stack[this.stack.length-1];
+    }
+
+    #GetId(){
+        return this.stack.length;
+    }
+
+    operationTypes = { //sub for enum
+        "Command": 0,
+        "Append": 1,
+    }
 }
-
 
 class SQlValueFormatter extends SB.IFormat{
     constructor(doubleQuoteString){
         super();
         
         this.dqs = doubleQuoteString;
+        console.log(doubleQuoteString);
     }
     
     format(input){
@@ -160,13 +232,37 @@ class SQLValueListFormatter extends SB.IFormat{
     }
 }
 
+class SQLAttributeFormatter extends SB.IFormat{
+    format(input){
+        const formatter = new SQlValueFormatter(false);
+
+        return `${input.condition} ${formatter.format(input.value)}`;
+    }
+}
+
+class SQLArrayFormatter extends SB.IFormat{
+    format(input){
+        const formatter = new SQlValueFormatter(false);
+
+        return `${formatter.format(input.value)} ${input.condition}`;
+    }
+}
+
 module.exports = {
-    SelectQuery,
-    ConditionalSelectQuery,
-    ChainedSelectQuery,
-    ArrayComarison,
-    ChainedArrayComparison,
-    DeleteQuery,
-    InsertQuery,
-    UpdateQuery
+    SQLBuilder,
+    ConditionFormat: { 
+        "Attribute": new SQLAttributeFormatter,
+        "Array": new SQLArrayFormatter,
+    }, 
+    Condition: (type, condition, value) => {
+        return {
+            format: type,
+            condition: condition,
+            value: value
+        }
+    },
+    SortOrder: {
+        "Ascending": "asc",
+        "Descending": "desc"
+    }
 }
