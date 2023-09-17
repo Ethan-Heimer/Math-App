@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 
 const app = express();
-const noteRoute = require('./routes/NoteRoutes.js');
-const editorRoute = require("./routes/editorRoutes.js");
+const noteRoute = require('./routes/noteRoutes.js');
+const editorRoute = require('./routes/editorRoutes.js');
 const loginRoute = require('./routes/userRoutes.js');
 
 app.use(bodyParser.urlencoded({
