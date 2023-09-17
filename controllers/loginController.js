@@ -39,10 +39,11 @@ const login = async (req, res) => {
     
         const user = await model.GetUserByName(username);
     
-        if(await bcrypt.compare(password, user.password)){
-            req.session.userId = user.id;
-            console.log(req.session.userId);
-            res.redirect(`/notes/${req.session.userId}`);
+        if(user != null && await bcrypt.compare(password, user.password)){
+            req.session.user = user;
+
+            console.log(req.session.user);
+            res.redirect(`/notes/${req.session.user.id}`);
         }
         else{
            displayLogin("Username or Password is wrong", 200, req.body.username)(req, res)

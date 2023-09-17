@@ -4,7 +4,7 @@ class StringBuilder {
     }
 
     append(input){
-        this.string += input.toString();
+        this.string += input;
 
         return this;
     }

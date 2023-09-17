@@ -1,12 +1,21 @@
 <%-include("partials/header.ejs")%>
 <body>
+    <div id="page-layout">
 
-    <div class="s-100 center">
-        <div class="center">
-            <%-include("./partials/profileSearch.ejs")%>
-            <p class="font-x-large">Farmer not Found...</p>
-            <p class="font-large">Search for a diffrent username, im sure you'll find their farm soon 🌾</p>
-        </div>
+        <%-include("partials/heading.ejs", {search: true, user: user, showRibbin: true})%>
+
+        <content class="s-100 center">
+            <div class="center pad-1 block primary-color">
+                <div class="center">
+                    <%-include("./partials/profileSearch.ejs")%>
+                    <p class="font-x-large">Farmer not Found...</p>
+                    <p class="font-large">Search for a diffrent username, im sure you'll find their farm soon 🌾</p>
+                </div>
+            </div>
+        </content>
+
+        <%-include("partials/footer.ejs")%>
+
     </div>
 
 </body>

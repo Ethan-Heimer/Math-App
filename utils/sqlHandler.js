@@ -49,124 +49,161 @@ module.exports = class SQLHandler{
     }
 
     async GetElementById(id, userId){
-        const sqlBuilder = new SQL.SQLBuilder();
-        sqlBuilder.Select("*", this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "Id =", id));
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            sqlBuilder.Select("*", this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "Id =", id));
 
-        if(userId != null)
-            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+            if(userId != null)
+                sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+            sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
 
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        return (await this.client.query(statement)).rows[0];
+            return (await this.client.query(statement)).rows[0];
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async GetElementsFromIds(ids, userId){
-        const sqlBuilder = new SQL.SQLBuilder();
-        const conditions = ids.map(x => SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", x))
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            const conditions = ids.map(x => SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", x))
 
-        sqlBuilder.Select("*", this.tableData.name).WhereIts("or", conditions);
+            sqlBuilder.Select("*", this.tableData.name).WhereIts("or", conditions);
 
-        if(userId != null)
-            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+            if(userId != null)
+                sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+            sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
 
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        return (await this.client.query(statement)).rows;
+            return (await this.client.query(statement)).rows;
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async GetElementsByArrayAttribute(attributeName, values, userId){
-        const sqlBuilder = new SQL.SQLBuilder();
-        const conditions = values.map(x => SQL.Condition(SQL.ConditionFormat["Array"], ` = any(${attributeName}) `, x));
-        
-        sqlBuilder.Select("*", this.tableData.name).WhereIts("or", conditions);
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            const conditions = values.map(x => SQL.Condition(SQL.ConditionFormat["Array"], ` = any(${attributeName}) `, x));
+            
+            sqlBuilder.Select("*", this.tableData.name).WhereIts("or", conditions);
 
-        if(userId != null)
-            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+            if(userId != null)
+                sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
-        
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+            
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        return (await this.client.query(statement)).rows;
+            return (await this.client.query(statement)).rows;
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async GetElementByAttribute(attributeName, value, userId){
-        const sqlBuilder = new SQL.SQLBuilder();
-        sqlBuilder.Select("*", this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], `${this.#GetTableValue(attributeName)} =`, value));
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            sqlBuilder.Select("*", this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], `${this.#GetTableValue(attributeName)} =`, value));
 
-        if(userId != null)
-            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+            if(userId != null)
+                sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+            sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
 
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        return (await this.client.query(statement)).rows[0];
+            return (await this.client.query(statement)).rows[0];
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async GetAllElements(userId){
-        const sqlBuilder = new SQL.SQLBuilder();
-        sqlBuilder.Select("*", this.tableData.name);
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            sqlBuilder.Select("*", this.tableData.name);
 
-        if(userId != null)
-            sqlBuilder.Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+            if(userId != null)
+                sqlBuilder.Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+            sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
 
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        return (await this.client.query(statement)).rows;
+            return (await this.client.query(statement)).rows;
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async DeleteElement(id, userId){
-        const sqlBuilder = new SQL.SQLBuilder();
-        sqlBuilder.Delete(this.tableData.name).Where('id = ', id);
-        if(userId != null)
-            sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            sqlBuilder.Delete(this.tableData.name).Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", id));
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
+            if(userId != null)
+                sqlBuilder.And(SQL.Condition(SQL.ConditionFormat["Attribute"], "user_id =", userId));
 
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        await this.client.query(statement);
+            await this.client.query(statement);
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async AddElement(values){
-        const sqlBuilder = new SQL.SQLBuilder();
-        sqlBuilder.Insert(this.tableData.name, this.#GetTableTitles(), values)
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            sqlBuilder.Insert(this.tableData.name, this.#GetTableTitles(), values)
 
-        sqlBuilder.Order("Id", SQL.SortOrder["Descending"]);
-
-        const statement = sqlBuilder.End();
-        console.log(statement);
-        await this.client.query(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
+            await this.client.query(statement);
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     async UpdateElement(id, values){
-        const sqlBuilder = new SQL.SQLBuilder();
-        sqlBuilder.Update(this.tableData.name);
+        try{
+            const sqlBuilder = new SQL.SQLBuilder();
+            sqlBuilder.Update(this.tableData.name);
 
-        const titles = this.#GetTableTitles();
+            const titles = this.#GetTableTitles();
 
-        for(var i = 0; i < titles.length; i++)
-            sqlBuilder.Set(titles[i], values[i]);
+            for(var i = 0; i < titles.length; i++)
+                sqlBuilder.Set(titles[i], values[i]);
 
-        sqlBuilder.Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", id)).Order("Id", SQL.SortOrder["Descending"]);
+            sqlBuilder.Where(SQL.Condition(SQL.ConditionFormat["Attribute"], "id =", id));
 
-        const statement = sqlBuilder.End();
-        console.log(statement);
+            const statement = sqlBuilder.End();
+            console.log(statement);
 
-        await this.client.query(statement);
+            await this.client.query(statement);
+        }
+        catch{
+            console.log(err);
+        }
     }
 
     #GetTableValue(key){

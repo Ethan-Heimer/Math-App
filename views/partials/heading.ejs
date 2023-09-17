@@ -1,0 +1,23 @@
+<%-include("newsRibbin.ejs")%>
+
+
+<%if(showRibbin == true) {%>
+    
+    <%if(user != null) {%>
+        <%-include("accountRibbin.ejs", {user})%>
+    <%} else {%>
+        <%-include("loginRibbin.ejs")%>
+    <%}%>
+
+<%}%>
+
+<header class="space-between primary-color pad-half sticky m-1-down">
+    
+    <p class="font-x-large">🚜 Fact Farm!</p>
+
+    <div>
+        <%if(search) {%>  
+            <%-include("profileSearch.ejs")%>
+        <%}%>
+    </div>
+</header>

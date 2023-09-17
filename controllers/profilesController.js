@@ -5,11 +5,12 @@ const displayProfile = async (req, res) => {
 
     try{
         const user = await users.GetUserByName(name);
+        console.log(user);
 
         res.redirect(`/notes/${user.id}`);
     }
     catch{
-        res.render("profileNotFound");
+        res.render("profileNotFound", {user: req.session.user});
     }
 }
 

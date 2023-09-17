@@ -1,27 +1,36 @@
 <%-include("partials/header.ejs")%>
+
 <body>
-    <div class="center">
-        <%-include("./partials/profileSearch.ejs")%>
-        
-        <%if(editable) {%>
-            <button class="primary-color font-large m-1">
-                <a href="/editor/">Add Fact!</a>
-            </button>
-        <%}%>
+    <div id="page-layout">
+        <%-include("partials/heading.ejs", {search: true, user: user, showRibbin: true})%>
 
-        <form class="m-1" action="/notes/filter/<%=userId%>" method="POST">
-            <input class="primary-color" type="text" name="filters" placeholder="Filter" <%if(filters != null){%>
-                                                                                            value='<%=filters%>'
-                                                                                         <%}%>>
-            <button class="primary-color" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>       
+        <content>
+            <div class="center">
+                
+                <h1 class="font-x-large m-1 pad-1 primary-color"><%=username%> Farm 🌾</h1>
+
+                <%if(editable) {%>
+                    <button class="primary-color font-large m-1">
+                        <a href="/editor/">Add Fact!</a>
+                    </button>
+                <%}%>
+
+                <form class="m-1 no-shadow search" action="/notes/filter/<%=userId%>" method="POST">
+                    <input class="primary-color" type="text" name="filters" placeholder="Filter by tags" <%if(filters != null){%>
+                                                                                                    value='<%=filters%>'
+                                                                                                <%}%>>
+                    <button class="primary-color" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>       
+            </div>
+
+            <div class="flex m-1">
+                <% notes.forEach(x => { %>
+                    <%- include('partials/noteCard.ejs', {note: x, editable}); %>
+                <%})%>
+            </div>
+        </content>
+
+        <%-include("partials/footer.ejs")%>
     </div>
-
-    <div class="flex m-1">
-        <% notes.forEach(x => { %>
-            <%- include('partials/noteCard.ejs', {note: x, editable}); %>
-        <%})%>
-    </div>
-
 </body>
 </html>

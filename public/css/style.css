@@ -5,12 +5,12 @@
 
     --font-dull: gray;
 
-    --font-x-large: 2.5vmax;
+    --font-x-large: 2vmax;
     --font-large: 1.5vmax;
     --font-medium: 1vmax;
     --font-small: .5vmax;
 
-    --rounded: 1vmax;
+    --rounded: 1vmax; 
 
     --shadow: #000000;
 
@@ -19,12 +19,14 @@
 
     --error-color: #E56B6F;
     --error-background: #E56B6F55;
+
+    --box-shadow: var(--shadow) 10px 10px 0px;
 }
 
 @media screen and (max-width: 600px){
     :root{
-        --font-x-large: 4vmax;
-        --font-large: 3vmax;
+        --font-x-large: 3vmax;
+        --font-large: 2.5vmax;
         --font-medium: 2vmax;
         --fonr-small: 1vmax;
     }
@@ -33,14 +35,14 @@
 *{
     color: white;
     font-family: 'Dosis', sans-serif;
-    text-shadow: 2px 2px 3px var(--background-color);
+    text-shadow: 3px 3px 0px var(--background-color);
 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
 
-   
+    max-width: 100%;
 }
 
 body{
@@ -68,7 +70,7 @@ input, textarea{
     border: none;
 
     border-radius: 1vmax;
-    box-shadow: var(--shadow) 10px 10px 20px;
+    box-shadow: var(--box-shadow);
     text-shadow: none;
 }
 
@@ -91,7 +93,7 @@ button{
     border: none;
 
     transition: .1s;
-    box-shadow: var(--shadow) 10px 10px 15px;
+    box-shadow: var(--box-shadow);
 }
 
 button:hover{
@@ -100,12 +102,41 @@ button:hover{
 
 form{
     border-radius: var(--rounded);
-    box-shadow: var(--shadow) 10px 10px 15px;
+    box-shadow: var(--box-shadow);
     min-width: fit-content;
+}
+
+header{
+    box-shadow: var(--shadow) 0px 10px 15px;
+    z-index: 10;
+}
+
+h1{
+    border-radius: var(--rounded);
+    box-shadow: var(--box-shadow);
+}
+
+footer{
+  position: absolute;
+  bottom: -10vmax;
+
+  width: 100%;
+}
+
+.sticky{
+    position: sticky;
+    top: 0;
+
+    z-index: 10;
 }
 
 .lock{
     overflow-y: hidden;
+}
+
+.lock-all{
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .primary-color{
@@ -153,9 +184,12 @@ form{
 }
 
 .grid{
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-    gap: 1vmax
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 6;
+
+    justify-content: center;
+    align-items: center;
 }
 
 .flex-end{
@@ -180,6 +214,10 @@ form{
     margin: 1vmax;
 }
 
+.m-1-down{
+    margin-bottom: 1vmax;
+}
+
 .p-100{
     width: 100%;
     height: 100%;
@@ -193,12 +231,36 @@ form{
     padding: 1vmax;
 }
 
+.pad-1-inline{
+    padding-inline: 1vmax;
+}
+
+.pad-half{
+    padding: .5vmax;
+}
+
+.space-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .error{
     color: var(--error-color);
     background-color: var(--error-background);
     padding: .5vmax;
     border-radius: var(--rounded);
 }
+
+.no-shadow{
+    box-shadow: none;
+}
+
+.block{
+    box-shadow: var(--box-shadow);
+    border-radius: var(--rounded);
+}
+
 
 .card{
     background-color: var(--primary-background-color);
@@ -214,7 +276,7 @@ form{
 
     border-radius: var(--rounded);
 
-    box-shadow: var(--shadow) 10px 10px 20px;
+    box-shadow: var(--box-shadow);
 
     transition: .1s;
 }
@@ -234,7 +296,7 @@ form{
    border-radius: var(--rounded);
    scale: 1.02;
 
-   box-shadow: var(--shadow) 10px 10px 20px;
+   box-shadow: var(--box-shadow);
 }
 
 .card > .content{
@@ -247,10 +309,6 @@ form{
     font-size: var(--font-small);
     padding: .5vmax;
     color: var(--font-dull);
-
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
 }
 
 .card > .footer button{
@@ -265,6 +323,40 @@ form{
 .card > .footer #edit:hover{
     background-color: var(--edit-highlight);
 }
+
+.search{
+ display: flex;
+ flex-grow: 1;
+}
+
+.search > input{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    
+}
+
+.search > button{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    z-index: 5;
+}
+
+.hero{
+    text-decoration: underline;
+    transition: .1s;
+}
+
+.hero:hover{
+    scale: 1.1;
+}
+
+#page-layout{
+   position: relative;
+   min-height: 100Vh;
+}
+
+
 
 
 
