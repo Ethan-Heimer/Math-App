@@ -4,11 +4,11 @@
                                     action="/editor/add"
                                  <%}%> enctype="multipart/form-data" method="POST">
     <legend class="center-flex p-100">
-        <h1 class="font-x-large"><%if(fact != null){%>
+        <p class="font-x-large"><%if(fact != null){%>
                                         Edit  
                                  <%}else{%> 
                                         Add
-                                 <%}%> a Fact!</h1>
+                                 <%}%> a Fact!</p>
 
         <div class="m-1 center">
             <label for="title">Fact Title</label>
@@ -20,43 +20,42 @@
         
         <div class="m-1 center">
             <label for="color">Fact Color</label> 
-            <div class="grid pad-1" id="Color-Select">
-                <input class="c25" type="radio" id="color" name="color" value="25">
-                <input class="c26" type="radio" id="color" name="color" value="26">
-                <input class="c27" type="radio" id="color" name="color" value="27">
-                <input class="c28" type="radio" id="color" name="color" value="28">
-                <input class="c29" type="radio" id="color" name="color" value="29">
-                <input class="c30" type="radio" id="color" name="color" value="30">
-                
-                <input class="c7" type="radio" id="color" name="color" value="7">
-                <input class="c8" type="radio" id="color" name="color" value="8">
-                <input class="c9" type="radio" id="color" name="color" value="9">
-                <input class="c10" type="radio" id="color" name="color" value="10">
-                <input class="c11" type="radio" id="color" name="color" value="11">
-                <input class="c12" type="radio" id="color" name="color" value="12">
-                
-                <input class="c1" type="radio" id="color" name="color" value="1">
-                <input class="c2" type="radio" id="color" name="color" value="2">
-                <input class="c3" type="radio" id="color" name="color" value="3">
-                <input class="c4" type="radio" id="color" name="color" value="4">
-                <input class="c5" type="radio" id="color" name="color" value="5" checked="checked">
-                <input class="c6" type="radio" id="color" name="color" value="6">
+                <div class="grid pad-1" id="color-picker">
+                    <input class="c25 no-shadow color-select" type="radio" id="color" name="color" value="25">
+                    <input class="c26 no-shadow color-select" type="radio" id="color" name="color" value="26">
+                    <input class="c27 no-shadow color-select" type="radio" id="color" name="color" value="27">
+                    <input class="c28 no-shadow color-select" type="radio" id="color" name="color" value="28">
+                    <input class="c29 no-shadow color-select" type="radio" id="color" name="color" value="29">
+                    <input class="c30 no-shadow color-select" type="radio" id="color" name="color" value="30">
+                    
+                    <input class="c7 no-shadow color-select" type="radio" id="color" name="color" value="7">
+                    <input class="c8 no-shadow color-select" type="radio" id="color" name="color" value="8">
+                    <input class="c9 no-shadow color-select" type="radio" id="color" name="color" value="9">
+                    <input class="c10 no-shadow color-select" type="radio" id="color" name="color" value="10">
+                    <input class="c11 no-shadow color-select" type="radio" id="color" name="color" value="11">
+                    <input class="c12 no-shadow color-select" type="radio" id="color" name="color" value="12">
+                    
+                    <input class="c1 no-shadow color-select" type="radio" id="color" name="color" value="1">
+                    <input class="c2 no-shadow color-select" type="radio" id="color" name="color" value="2">
+                    <input class="c3 no-shadow color-select" type="radio" id="color" name="color" value="3">
+                    <input class="c4 no-shadow color-select" type="radio" id="color" name="color" value="4">
+                    <input class="c5 no-shadow color-select" type="radio" id="color" name="color" value="5" checked="checked">
+                    <input class="c6 no-shadow color-select" type="radio" id="color" name="color" value="6">
 
-                <input class="c13" type="radio" id="color" name="color" value="13">
-                <input class="c14" type="radio" id="color" name="color" value="14">
-                <input class="c15" type="radio" id="color" name="color" value="15">
-                <input class="c16" type="radio" id="color" name="color" value="16">
-                <input class="c17" type="radio" id="color" name="color" value="17">
-                <input class="c18" type="radio" id="color" name="color" value="18">
+                    <input class="c13 no-shadow color-select" type="radio" id="color" name="color" value="13">
+                    <input class="c14 no-shadow color-select" type="radio" id="color" name="color" value="14">
+                    <input class="c15 no-shadow color-select" type="radio" id="color" name="color" value="15">
+                    <input class="c16 no-shadow color-select" type="radio" id="color" name="color" value="16">
+                    <input class="c17 no-shadow color-select" type="radio" id="color" name="color" value="17">
+                    <input class="c18 no-shadow color-select" type="radio" id="color" name="color" value="18">
 
-                <input class="c19" type="radio" id="color" name="color" value="19">
-                <input class="c20" type="radio" id="color" name="color" value="20">
-                <input class="c21" type="radio" id="color" name="color" value="21">
-                <input class="c22" type="radio" id="color" name="color" value="22">
-                <input class="c23" type="radio" id="color" name="color" value="23">
-                <input class="c24" type="radio" id="color" name="color" value="24">
-            </div>
-           
+                    <input class="c19 no-shadow color-select" type="radio" id="color" name="color" value="19">
+                    <input class="c20 no-shadow color-select" type="radio" id="color" name="color" value="20">
+                    <input class="c21 no-shadow color-select" type="radio" id="color" name="color" value="21">
+                    <input class="c22 no-shadow color-select" type="radio" id="color" name="color" value="22">
+                    <input class="c23 no-shadow color-select" type="radio" id="color" name="color" value="23">
+                    <input class="c24 no-shadow color-select" type="radio" id="color" name="color" value="24">
+                </div>
         </div>
 
 

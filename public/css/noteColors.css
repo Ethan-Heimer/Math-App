@@ -131,16 +131,23 @@
     background-color: var(--card-header-color-thirty);
 }
 
+input[type='radio']{
+    margin-block: 1vmax;
+    visibility: hidden;
+}
+
 input[type='radio']:after {
-    width: 1vmax;
-    height: 1vmax;
-    top: -8px;
-    left: -4px;
+    width: 3vmin;
+    height: 3vmin;
+
+    bottom: .75vmax;
+
     position: relative;
     content: '';
     display: inline-block;
     visibility: visible;
     border: 2px solid var(--background-color);
+    box-shadow: none;
 
     transition: 0.1s;
 }
@@ -270,9 +277,14 @@ input[type='radio'].c30:after {
     background-color: var(--card-header-color-thirty);
 }
 
+.color-select{
+    flex: .1 0 15%; /* explanation below */
+}
 
-#Color-Select{
-    box-shadow: var(--shadow) 10px 10px 15px;
+#color-picker{
     border-radius: var(--rounded);
     background-color: var(--background-color);
+
+    width: 17vmax;
+    box-shadow: var(--box-shadow);
 }

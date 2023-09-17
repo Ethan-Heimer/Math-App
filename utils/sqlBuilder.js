@@ -121,7 +121,7 @@ class SQLBuilder{
         const token = this.#CreateToken(this.operationTypes["Append"], id, () => {
             console.log(this.#PreviousToken(id).spesOp);
 
-            if(this.#PreviousToken(id).operation == this.operationTypes["List"])
+            if(this.#PreviousToken(id).operation == this.operationTypes["Append"])
                 this.sql.append(", ")
             else if(this.#PreviousToken(id).operation == this.operationTypes["Command"])
                 this.sql.append(" set ");

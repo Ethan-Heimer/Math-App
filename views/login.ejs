@@ -1,21 +1,25 @@
 <%-include("partials/header.ejs")%>
+
 <body>
+    <div id="page-layout">
+        <%-include("partials/heading.ejs", {search: false, user: null, showRibbin: false})%>
+        <div class="center s-100">
+            <div class="center">
+                <h1 class="font-x-large primary-color pad-1">Welcome To The Fact Farm 🌾</h1>
+                <%if(create) {%>
+                    <%-include("partials/createForm.ejs")%>
+                <%}else{%> 
+                    <%-include("partials/loginForm.ejs")%>
+                <%}%>
 
-    <div class="center s-100">
-        <div class="center">
-            <h1 class="font-x-large">Welcome To The Fact Farm 🌾</h1>
-            <%if(create) {%>
-                <%-include("partials/createForm.ejs")%>
-            <%}else{%> 
-                <%-include("partials/loginForm.ejs")%>
-            <%}%>
-
-            <%if(error != null) {%>
-                <p class="font-medium error"><%=error%></p>
-            <%}%>
+                <%if(error != null) {%>
+                    <p class="font-medium error"><%=error%></p>
+                <%}%>
+            </div>
+            
         </div>
-        
-    </div>
 
+        <%-include("partials/footer.ejs")%>
+    </div>
 </body>
 </html>

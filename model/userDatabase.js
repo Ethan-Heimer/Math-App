@@ -15,15 +15,17 @@ const AddNewUser = async (email, username, password) => {
 }
 
 const GetUserByName = async (username) =>{
-    SQL.Test();
-    
-    console.log(username);
-    
     const user = await SQL.GetElementByAttribute("Username", username);
+    return user;
+}
+
+const GetUserById = async(id) => {
+    const user = await SQL.GetElementById(id);
     return user;
 }
 
 module.exports = {
     AddNewUser,
-    GetUserByName
+    GetUserByName,
+    GetUserById
 }

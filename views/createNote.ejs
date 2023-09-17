@@ -1,13 +1,19 @@
 <%-include("partials/header.ejs")%>
 
 <body>
-    <div class="center s-100">
-        <%if(fact != null){%>
-            <%-include("partials/noteForm.ejs", {fact: fact})%>
-        <%}else{%>
-            <%-include("partials/noteForm.ejs")%>
-        <%}%>
-        
-    </div>    
+    <div id="page-layout"> 
+        <%-include("partials/heading.ejs", {search: true, user: user, showRibbin: true})%>
+
+        <div class="center s-100">
+            <%if(fact != null){%>
+                <%-include("partials/noteForm.ejs", {fact: fact})%>
+            <%}else{%>
+                <%-include("partials/noteForm.ejs")%>
+            <%}%>
+            
+        </div>    
+
+        <%-include("partials/footer.ejs")%>
+    </div>
 </body>
 </html>

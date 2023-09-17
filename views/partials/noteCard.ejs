@@ -5,8 +5,8 @@
         <p><%=note.note_content%></p>
     </div>
     
-    <div class="footer">
-        <%=note.note_tags%>#<%=note.id%>c:<%=note.note_color%>
+    <div class="footer space-between">
+        tags:<%=note.note_tags%> #<%=note.id%> c:<%=note.note_color%>
 
         <%if(editable) {%>
             <div>

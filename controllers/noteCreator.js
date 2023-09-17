@@ -1,9 +1,15 @@
-const model = require("../model/noteDatabase.js");
+const model = require("../model/noteDatabase.js"); 
 
 async function Display(req, res){
-    const fact = await GetNote(req.params.id, req.session.userId);
+    if(req.session.user == null)
+    {
+        res.redirect("/user/login");
+        return;
+    }
     
-    res.render("createNote", {fact});
+    const fact = await GetNote(req.params.id, req.session.user.Id);
+    
+    res.render("createNote", {fact, user: req.session.user});
 }
 
 async function GetNote(id, userId){
