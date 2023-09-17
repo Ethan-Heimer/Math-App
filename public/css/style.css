@@ -104,6 +104,10 @@ form{
     border-radius: var(--rounded);
     box-shadow: var(--box-shadow);
     min-width: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 header{
