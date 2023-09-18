@@ -27,7 +27,6 @@ async function GetNotesByFilter(filters, userId){
     if(filters == null)
         return await model.GetAllNotes(userId);
     
-        console.log(userId, "user id");
     const filtersArray = arrayBuilder.GetStringArrayFromString(filters, ",")
     const notes = await model.GetNotesByTag(filtersArray, userId);
 
@@ -35,7 +34,6 @@ async function GetNotesByFilter(filters, userId){
 }
 
 async function SetFilters(req, res){
-    console.log(req.params.userId);
     res.redirect(`/notes/${req.params.userId}/${req.body.filters}`);
 }
 

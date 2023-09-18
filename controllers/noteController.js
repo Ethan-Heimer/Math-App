@@ -2,9 +2,10 @@ const model = require("../model/noteDatabase.js");
 const arrayBuilder = require("../utils/arrayBuilder.js");
 
 const AddNote = async (req, res) => {
+    console.log("add");
+    console.log(req.session.user.id);
+    
     const tagArray = arrayBuilder.GetStringArrayFromString(req.body.tags, ",");
-
-    console.log(req.body.color);
     await model.AddNewNote(req.body.title, req.body.content, tagArray, req.body.color, req.session.user.id);
 
     res.redirect(`/notes/${req.session.user.id}`);    

@@ -5,8 +5,6 @@ const displayProfile = async (req, res) => {
 
     try{
         const user = await users.GetUserByName(name);
-        console.log(user);
-
         req.session.userViewing = user; 
 
         res.redirect(`/notes/${user.id}`);
