@@ -8,7 +8,7 @@ const tableData = {
     noteTitle: process.env.NOTE_TABLE_NOTE_TITLE,
     noteContent: process.env.NOTE_TABLE_NOTE_CONTENT,
     noteTags: process.env.NOTE_TABLE_NOTE_TAGS,
-    noteColor: process.env.NOTE_TABLE_Note_COLOR
+    noteColor: process.env.NOTE_TABLE_NOTE_COLOR
 }
 const SQL = new SQLHandler(tableData);
 
