@@ -278,7 +278,7 @@ input[type='radio'].c30:after {
 }
 
 .color-select{
-    flex: .1 0 15%; /* explanation below */
+    flex: .1 0 15%; 
 }
 
 #color-picker{

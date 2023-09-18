@@ -3,9 +3,11 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 
 const app = express();
+
 const noteRoute = require('./routes/noteRoutes.js');
 const editorRoute = require('./routes/editorRoutes.js');
 const loginRoute = require('./routes/userRoutes.js');
+const flashcardRoute = require('./routes/flashCardRoutes.js');
 
 app.use(bodyParser.urlencoded({
     extended: false,
@@ -21,6 +23,7 @@ app.use(session({
 app.use("/notes", noteRoute);
 app.use("/editor", editorRoute);
 app.use('/user', loginRoute);
+app.use('/flashcard', flashcardRoute);
 
 app.use(express.static("./public/css"));
 app.use(express.static("./public/images"));

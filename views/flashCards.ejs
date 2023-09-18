@@ -1,0 +1,16 @@
+<%-include("partials/header.ejs")%>
+
+<body>
+    <div id="page-layout">
+        <%-include("partials/heading.ejs", {search: true, user: user, showRibbin: true})%>
+
+        <content>
+            
+        </content>
+
+        <%-include("partials/footer.ejs")%>
+    </div>
+
+    <script src="/flashcards.js"></script>
+</body>
+</html>

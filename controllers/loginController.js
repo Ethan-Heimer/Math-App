@@ -41,6 +41,7 @@ const login = async (req, res) => {
     
         if(user != null && await bcrypt.compare(password, user.password)){
             req.session.user = user;
+            req.session.userViewing = user; 
 
             console.log(req.session.user);
             res.redirect(`/notes/${req.session.user.id}`);

@@ -44,7 +44,7 @@
 
     max-width: 100%;
 
-    -webkit-appearance: none;
+   
 }
 
 body{
@@ -74,6 +74,8 @@ input, textarea{
     border-radius: 1vmax;
     box-shadow: var(--box-shadow);
     text-shadow: none;
+
+    -webkit-box-shadow: var(--box-shadow);
 }
 
 input{
